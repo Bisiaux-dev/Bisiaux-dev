@@ -1,0 +1,677 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="60" viewBox="0 0 600 60" role="img" aria-labelledby="t d">
+<title id="t">Hi, I'm Pierre: Python, JavaScript and TypeScript developer</title>
+<desc id="d">Animated terminal-style header. Each line decrypts from random glyphs into: Hi, I'm Pierre / Python · JavaScript · TypeScript developer / Building APIs with Node.js, Express &amp; Next.js / Automating with Notion API &amp; GitHub Actions.</desc>
+<style>text{font-family:'JetBrains Mono','Cascadia Code',Consolas,'SF Mono',ui-monospace,Menlo,'Liberation Mono',monospace;font-size:20px;font-weight:500;text-anchor:middle}.l text{fill:#765082;opacity:0;animation:on 24.464s step-end infinite,off 24.464s step-end infinite}.l .n{fill:#533861;font-weight:700;animation-name:onn,off}.s text{fill:#8f6a99;opacity:0;animation:b 24.464s step-end infinite}.s .t{fill:#a87fb0}.g text{fill:#c39bc8;opacity:0;animation:gh 24.464s step-end infinite}.cx{animation:cm 24.464s step-end -2.804s infinite}.cb{animation:bk 24.464s step-end -2.804s infinite}.st{display:none}@media (prefers-reduced-motion:reduce){.a{display:none}.st{display:inline}}@keyframes b{0%{opacity:1}0.286%{opacity:0}}@keyframes gh{0%{opacity:1}0.409%{opacity:0}}@keyframes on{0%{opacity:1;fill:#533861;animation-timing-function:ease-out}1.39%{opacity:1;fill:#765082;animation-timing-function:step-end}22.188%{opacity:0}}@keyframes onn{0%{opacity:1;fill:#302040;animation-timing-function:ease-out}1.39%{opacity:1;fill:#533861;animation-timing-function:step-end}22.188%{opacity:0}}@keyframes off{0%{fill-opacity:0}12.157%{fill-opacity:1}}@keyframes cm{0%{transform:translateX(216px);animation-timing-function:step-end}2.861%{transform:translateX(216px);animation-timing-function:steps(14,start)}5.608%{transform:translateX(384px);animation-timing-function:step-end}20.455%{transform:translateX(384px);animation-timing-function:steps(14,start)}21.485%{transform:translateX(216px);animation-timing-function:step-end}22.098%{transform:translateX(40px);animation-timing-function:step-end}24.959%{transform:translateX(40px);animation-timing-function:steps(42,start)}33.2%{transform:translateX(544px);animation-timing-function:step-end}43.811%{transform:translateX(544px);animation-timing-function:steps(42,start)}46.902%{transform:translateX(40px);animation-timing-function:step-end}47.515%{transform:translateX(40px);animation-timing-function:step-end}50.376%{transform:translateX(40px);animation-timing-function:steps(45,start)}59.205%{transform:translateX(580px);animation-timing-function:step-end}70.25%{transform:translateX(580px);animation-timing-function:steps(45,start)}73.561%{transform:translateX(40px);animation-timing-function:step-end}74.174%{transform:translateX(40px);animation-timing-function:step-end}77.036%{transform:translateX(40px);animation-timing-function:steps(43,start)}85.473%{transform:translateX(556px);animation-timing-function:step-end}96.223%{transform:translateX(556px);animation-timing-function:steps(43,start)}99.387%{transform:translateX(40px);animation-timing-function:step-end}100%{transform:translateX(216px)}}@keyframes bk{0%{opacity:1}8.723%{opacity:0}10.889%{opacity:1}13.056%{opacity:0}15.222%{opacity:1}17.389%{opacity:0}19.555%{opacity:1}20.455%{opacity:1}22.098%{opacity:1}35.742%{opacity:0}37.909%{opacity:1}40.075%{opacity:0}42.242%{opacity:1}43.811%{opacity:1}47.515%{opacity:1}62.034%{opacity:0}64.2%{opacity:1}66.367%{opacity:0}68.533%{opacity:1}70.25%{opacity:1}74.174%{opacity:1}88.105%{opacity:0}90.271%{opacity:1}92.438%{opacity:0}94.604%{opacity:1}96.223%{opacity:1}}</style>
+<g class="a" transform="translate(0 37)">
+<g class="s">
+<text x="222" style="animation-delay:-2.104s">?</text>
+<text class="t" x="222" style="animation-delay:-2.034s">]</text>
+<text x="222" style="animation-delay:-1.964s">E</text>
+<text x="222" style="animation-delay:-1.894s">&gt;</text>
+<text x="234" style="animation-delay:-2.056s">0</text>
+<text x="234" style="animation-delay:-1.986s">^</text>
+<text x="246" style="animation-delay:-2.008s">B</text>
+<text x="246" style="animation-delay:-1.938s">+</text>
+<text class="t" x="270" style="animation-delay:-1.912s">A</text>
+<text x="270" style="animation-delay:-1.842s">C</text>
+<text x="282" style="animation-delay:-1.864s">F</text>
+<text x="282" style="animation-delay:-1.794s">!</text>
+<text x="282" style="animation-delay:-1.724s">[</text>
+<text class="t" x="294" style="animation-delay:-1.816s">C</text>
+<text x="294" style="animation-delay:-1.746s">}</text>
+<text class="t" x="294" style="animation-delay:-1.676s">0</text>
+<text x="318" style="animation-delay:-1.72s">?</text>
+<text x="318" style="animation-delay:-1.65s">#</text>
+<text x="330" style="animation-delay:-1.672s">/</text>
+<text class="t" x="330" style="animation-delay:-1.602s">!</text>
+<text class="t" x="330" style="animation-delay:-1.532s">D</text>
+<text x="342" style="animation-delay:-1.624s">*</text>
+<text x="342" style="animation-delay:-1.554s">A</text>
+<text x="342" style="animation-delay:-1.484s">-</text>
+<text x="354" style="animation-delay:-1.576s">]</text>
+<text class="t" x="354" style="animation-delay:-1.506s">A</text>
+<text x="366" style="animation-delay:-1.528s">&lt;</text>
+<text x="366" style="animation-delay:-1.458s">\</text>
+<text class="t" x="366" style="animation-delay:-1.388s">]</text>
+<text x="378" style="animation-delay:-1.48s">&gt;</text>
+<text x="378" style="animation-delay:-1.41s">[</text>
+<text x="378" style="animation-delay:-1.34s">F</text>
+<text x="378" style="animation-delay:-1.27s">1</text>
+<text class="t" x="46" style="animation-delay:-21.162s">-</text>
+<text x="46" style="animation-delay:-21.092s">1</text>
+<text x="46" style="animation-delay:-21.022s">*</text>
+<text class="t" x="58" style="animation-delay:-21.114s">E</text>
+<text class="t" x="58" style="animation-delay:-21.044s">]</text>
+<text class="t" x="70" style="animation-delay:-21.066s">%</text>
+<text class="t" x="70" style="animation-delay:-20.996s">\</text>
+<text x="70" style="animation-delay:-20.926s">]</text>
+<text x="82" style="animation-delay:-21.018s">&lt;</text>
+<text x="82" style="animation-delay:-20.948s">&gt;</text>
+<text x="82" style="animation-delay:-20.878s">]</text>
+<text x="94" style="animation-delay:-20.97s">0</text>
+<text x="94" style="animation-delay:-20.9s">\</text>
+<text x="94" style="animation-delay:-20.83s">&lt;</text>
+<text x="106" style="animation-delay:-20.922s">1</text>
+<text x="106" style="animation-delay:-20.852s">_</text>
+<text x="106" style="animation-delay:-20.782s">F</text>
+<text class="t" x="130" style="animation-delay:-20.826s">&gt;</text>
+<text x="130" style="animation-delay:-20.756s">*</text>
+<text x="154" style="animation-delay:-20.73s">1</text>
+<text x="154" style="animation-delay:-20.66s">C</text>
+<text class="t" x="154" style="animation-delay:-20.59s">&lt;</text>
+<text x="154" style="animation-delay:-20.52s">D</text>
+<text x="166" style="animation-delay:-20.682s">^</text>
+<text x="166" style="animation-delay:-20.612s">_</text>
+<text x="166" style="animation-delay:-20.542s">%</text>
+<text class="t" x="166" style="animation-delay:-20.472s">!</text>
+<text x="178" style="animation-delay:-20.634s">=</text>
+<text x="178" style="animation-delay:-20.564s">-</text>
+<text x="178" style="animation-delay:-20.494s">A</text>
+<text x="190" style="animation-delay:-20.586s">0</text>
+<text x="190" style="animation-delay:-20.516s">^</text>
+<text x="190" style="animation-delay:-20.446s">&lt;</text>
+<text class="t" x="202" style="animation-delay:-20.538s">/</text>
+<text x="202" style="animation-delay:-20.468s">\</text>
+<text x="202" style="animation-delay:-20.398s">=</text>
+<text x="202" style="animation-delay:-20.328s">}</text>
+<text x="214" style="animation-delay:-20.49s">A</text>
+<text class="t" x="214" style="animation-delay:-20.42s">[</text>
+<text x="214" style="animation-delay:-20.35s">\</text>
+<text class="t" x="214" style="animation-delay:-20.28s">*</text>
+<text class="t" x="226" style="animation-delay:-20.442s">=</text>
+<text class="t" x="226" style="animation-delay:-20.372s">?</text>
+<text x="226" style="animation-delay:-20.302s">-</text>
+<text class="t" x="238" style="animation-delay:-20.394s">[</text>
+<text x="238" style="animation-delay:-20.324s">E</text>
+<text x="238" style="animation-delay:-20.254s">]</text>
+<text class="t" x="238" style="animation-delay:-20.184s">?</text>
+<text x="250" style="animation-delay:-20.346s">0</text>
+<text class="t" x="250" style="animation-delay:-20.276s">[</text>
+<text x="250" style="animation-delay:-20.206s">\</text>
+<text x="250" style="animation-delay:-20.136s">*</text>
+<text x="262" style="animation-delay:-20.298s">C</text>
+<text x="262" style="animation-delay:-20.228s">D</text>
+<text class="t" x="262" style="animation-delay:-20.158s">?</text>
+<text x="286" style="animation-delay:-20.202s">0</text>
+<text x="286" style="animation-delay:-20.132s">C</text>
+<text x="286" style="animation-delay:-20.062s">B</text>
+<text x="286" style="animation-delay:-19.992s">D</text>
+<text x="310" style="animation-delay:-20.106s">1</text>
+<text x="310" style="animation-delay:-20.036s">^</text>
+<text x="310" style="animation-delay:-19.966s">B</text>
+<text class="t" x="322" style="animation-delay:-20.058s">_</text>
+<text x="322" style="animation-delay:-19.988s">!</text>
+<text x="334" style="animation-delay:-20.01s">E</text>
+<text x="334" style="animation-delay:-19.94s">/</text>
+<text class="t" x="334" style="animation-delay:-19.87s">\</text>
+<text x="346" style="animation-delay:-19.962s">A</text>
+<text x="346" style="animation-delay:-19.892s">1</text>
+<text x="346" style="animation-delay:-19.822s">D</text>
+<text x="358" style="animation-delay:-19.914s">{</text>
+<text x="358" style="animation-delay:-19.844s">&gt;</text>
+<text x="358" style="animation-delay:-19.774s">#</text>
+<text class="t" x="358" style="animation-delay:-19.704s">-</text>
+<text class="t" x="370" style="animation-delay:-19.866s">{</text>
+<text class="t" x="370" style="animation-delay:-19.796s">[</text>
+<text x="370" style="animation-delay:-19.726s">=</text>
+<text class="t" x="382" style="animation-delay:-19.818s">A</text>
+<text class="t" x="382" style="animation-delay:-19.748s">*</text>
+<text class="t" x="382" style="animation-delay:-19.678s">C</text>
+<text x="394" style="animation-delay:-19.77s">1</text>
+<text class="t" x="394" style="animation-delay:-19.7s">^</text>
+<text class="t" x="394" style="animation-delay:-19.63s">E</text>
+<text x="406" style="animation-delay:-19.722s">*</text>
+<text x="406" style="animation-delay:-19.652s">\</text>
+<text x="406" style="animation-delay:-19.582s">{</text>
+<text class="t" x="418" style="animation-delay:-19.674s">^</text>
+<text x="418" style="animation-delay:-19.604s">[</text>
+<text class="t" x="442" style="animation-delay:-19.578s">^</text>
+<text class="t" x="442" style="animation-delay:-19.508s">_</text>
+<text x="442" style="animation-delay:-19.438s">B</text>
+<text x="454" style="animation-delay:-19.53s">B</text>
+<text class="t" x="454" style="animation-delay:-19.46s">+</text>
+<text x="466" style="animation-delay:-19.482s">{</text>
+<text class="t" x="466" style="animation-delay:-19.412s">*</text>
+<text x="466" style="animation-delay:-19.342s">[</text>
+<text x="466" style="animation-delay:-19.272s">}</text>
+<text class="t" x="478" style="animation-delay:-19.434s">-</text>
+<text x="478" style="animation-delay:-19.364s">=</text>
+<text x="478" style="animation-delay:-19.294s">A</text>
+<text x="490" style="animation-delay:-19.386s">B</text>
+<text class="t" x="490" style="animation-delay:-19.316s">/</text>
+<text class="t" x="490" style="animation-delay:-19.246s">[</text>
+<text x="502" style="animation-delay:-19.338s">&lt;</text>
+<text x="502" style="animation-delay:-19.268s">^</text>
+<text x="502" style="animation-delay:-19.198s">*</text>
+<text x="502" style="animation-delay:-19.128s">!</text>
+<text x="514" style="animation-delay:-19.29s">&gt;</text>
+<text class="t" x="514" style="animation-delay:-19.22s">0</text>
+<text x="526" style="animation-delay:-19.242s">!</text>
+<text x="526" style="animation-delay:-19.172s">_</text>
+<text x="538" style="animation-delay:-19.194s">1</text>
+<text x="538" style="animation-delay:-19.124s">!</text>
+<text x="46" style="animation-delay:-14.944s">-</text>
+<text x="46" style="animation-delay:-14.874s">^</text>
+<text x="46" style="animation-delay:-14.804s">!</text>
+<text x="46" style="animation-delay:-14.734s">D</text>
+<text x="58" style="animation-delay:-14.896s">/</text>
+<text x="58" style="animation-delay:-14.826s">1</text>
+<text x="58" style="animation-delay:-14.756s">F</text>
+<text class="t" x="70" style="animation-delay:-14.848s">}</text>
+<text x="70" style="animation-delay:-14.778s">C</text>
+<text x="70" style="animation-delay:-14.708s">-</text>
+<text x="82" style="animation-delay:-14.8s">#</text>
+<text x="82" style="animation-delay:-14.73s">B</text>
+<text x="82" style="animation-delay:-14.66s">*</text>
+<text x="82" style="animation-delay:-14.59s">=</text>
+<text x="94" style="animation-delay:-14.752s">*</text>
+<text x="94" style="animation-delay:-14.682s">&lt;</text>
+<text x="94" style="animation-delay:-14.612s">A</text>
+<text x="106" style="animation-delay:-14.704s">-</text>
+<text x="106" style="animation-delay:-14.634s">/</text>
+<text x="106" style="animation-delay:-14.564s">C</text>
+<text class="t" x="106" style="animation-delay:-14.494s">-</text>
+<text class="t" x="118" style="animation-delay:-14.656s">F</text>
+<text class="t" x="118" style="animation-delay:-14.586s">}</text>
+<text x="118" style="animation-delay:-14.516s">0</text>
+<text class="t" x="130" style="animation-delay:-14.608s">\</text>
+<text x="130" style="animation-delay:-14.538s">*</text>
+<text x="130" style="animation-delay:-14.468s">&lt;</text>
+<text x="154" style="animation-delay:-14.512s">-</text>
+<text x="154" style="animation-delay:-14.442s">B</text>
+<text class="t" x="154" style="animation-delay:-14.372s">D</text>
+<text class="t" x="166" style="animation-delay:-14.464s">[</text>
+<text x="166" style="animation-delay:-14.394s">+</text>
+<text x="166" style="animation-delay:-14.324s">1</text>
+<text class="t" x="178" style="animation-delay:-14.416s">1</text>
+<text x="178" style="animation-delay:-14.346s">_</text>
+<text class="t" x="190" style="animation-delay:-14.368s">F</text>
+<text x="190" style="animation-delay:-14.298s">-</text>
+<text x="190" style="animation-delay:-14.228s">E</text>
+<text x="214" style="animation-delay:-14.272s">B</text>
+<text x="214" style="animation-delay:-14.202s">&lt;</text>
+<text class="t" x="226" style="animation-delay:-14.224s">/</text>
+<text x="226" style="animation-delay:-14.154s">1</text>
+<text x="226" style="animation-delay:-14.084s">*</text>
+<text class="t" x="226" style="animation-delay:-14.014s">/</text>
+<text x="238" style="animation-delay:-14.176s">]</text>
+<text x="238" style="animation-delay:-14.106s">E</text>
+<text x="238" style="animation-delay:-14.036s">=</text>
+<text x="238" style="animation-delay:-13.966s">%</text>
+<text x="250" style="animation-delay:-14.128s">C</text>
+<text x="250" style="animation-delay:-14.058s">\</text>
+<text x="250" style="animation-delay:-13.988s">A</text>
+<text class="t" x="274" style="animation-delay:-14.032s">_</text>
+<text x="274" style="animation-delay:-13.962s">?</text>
+<text class="t" x="274" style="animation-delay:-13.892s">-</text>
+<text x="274" style="animation-delay:-13.822s">?</text>
+<text class="t" x="286" style="animation-delay:-13.984s">&lt;</text>
+<text x="286" style="animation-delay:-13.914s">/</text>
+<text x="286" style="animation-delay:-13.844s">C</text>
+<text x="286" style="animation-delay:-13.774s">]</text>
+<text x="298" style="animation-delay:-13.936s">+</text>
+<text x="298" style="animation-delay:-13.866s">E</text>
+<text class="t" x="298" style="animation-delay:-13.796s">-</text>
+<text class="t" x="310" style="animation-delay:-13.888s">A</text>
+<text class="t" x="310" style="animation-delay:-13.818s">1</text>
+<text x="310" style="animation-delay:-13.748s">/</text>
+<text class="t" x="310" style="animation-delay:-13.678s">1</text>
+<text x="322" style="animation-delay:-13.84s">C</text>
+<text x="322" style="animation-delay:-13.77s">&gt;</text>
+<text x="334" style="animation-delay:-13.792s">D</text>
+<text x="334" style="animation-delay:-13.722s">1</text>
+<text class="t" x="346" style="animation-delay:-13.744s">1</text>
+<text x="346" style="animation-delay:-13.674s">}</text>
+<text x="346" style="animation-delay:-13.604s">C</text>
+<text x="346" style="animation-delay:-13.534s">%</text>
+<text class="t" x="358" style="animation-delay:-13.696s">_</text>
+<text x="358" style="animation-delay:-13.626s">/</text>
+<text x="358" style="animation-delay:-13.556s">0</text>
+<text x="382" style="animation-delay:-13.6s">+</text>
+<text x="382" style="animation-delay:-13.53s">?</text>
+<text x="382" style="animation-delay:-13.46s">^</text>
+<text x="382" style="animation-delay:-13.39s">/</text>
+<text class="t" x="394" style="animation-delay:-13.552s">}</text>
+<text x="394" style="animation-delay:-13.482s">\</text>
+<text x="394" style="animation-delay:-13.412s">=</text>
+<text x="406" style="animation-delay:-13.504s">A</text>
+<text x="406" style="animation-delay:-13.434s">&lt;</text>
+<text x="406" style="animation-delay:-13.364s">+</text>
+<text x="418" style="animation-delay:-13.456s">A</text>
+<text class="t" x="418" style="animation-delay:-13.386s">F</text>
+<text class="t" x="430" style="animation-delay:-13.408s">{</text>
+<text x="430" style="animation-delay:-13.338s">&lt;</text>
+<text x="430" style="animation-delay:-13.268s">\</text>
+<text x="442" style="animation-delay:-13.36s">D</text>
+<text class="t" x="442" style="animation-delay:-13.29s">/</text>
+<text x="442" style="animation-delay:-13.22s">&lt;</text>
+<text x="454" style="animation-delay:-13.312s">#</text>
+<text x="454" style="animation-delay:-13.242s">-</text>
+<text class="t" x="454" style="animation-delay:-13.172s">F</text>
+<text class="t" x="478" style="animation-delay:-13.216s">C</text>
+<text x="478" style="animation-delay:-13.146s">]</text>
+<text x="478" style="animation-delay:-13.076s">^</text>
+<text x="502" style="animation-delay:-13.12s">F</text>
+<text x="502" style="animation-delay:-13.05s">0</text>
+<text class="t" x="514" style="animation-delay:-13.072s">F</text>
+<text x="514" style="animation-delay:-13.002s">*</text>
+<text class="t" x="514" style="animation-delay:-12.932s">0</text>
+<text x="526" style="animation-delay:-13.024s">&gt;</text>
+<text x="526" style="animation-delay:-12.954s">!</text>
+<text x="538" style="animation-delay:-12.976s">}</text>
+<text x="538" style="animation-delay:-12.906s">B</text>
+<text x="550" style="animation-delay:-12.928s">+</text>
+<text x="550" style="animation-delay:-12.858s">^</text>
+<text class="t" x="550" style="animation-delay:-12.788s">=</text>
+<text x="550" style="animation-delay:-12.718s">A</text>
+<text x="562" style="animation-delay:-12.88s">F</text>
+<text x="562" style="animation-delay:-12.81s">*</text>
+<text x="562" style="animation-delay:-12.74s">B</text>
+<text x="574" style="animation-delay:-12.832s">&lt;</text>
+<text x="574" style="animation-delay:-12.762s">F</text>
+<text x="574" style="animation-delay:-12.692s">A</text>
+<text x="46" style="animation-delay:-8.422s">D</text>
+<text x="46" style="animation-delay:-8.352s">\</text>
+<text x="58" style="animation-delay:-8.374s">F</text>
+<text x="58" style="animation-delay:-8.304s">1</text>
+<text class="t" x="58" style="animation-delay:-8.234s">_</text>
+<text class="t" x="70" style="animation-delay:-8.326s">_</text>
+<text x="70" style="animation-delay:-8.256s">%</text>
+<text class="t" x="70" style="animation-delay:-8.186s">E</text>
+<text class="t" x="82" style="animation-delay:-8.278s">F</text>
+<text x="82" style="animation-delay:-8.208s">?</text>
+<text class="t" x="94" style="animation-delay:-8.23s">#</text>
+<text x="94" style="animation-delay:-8.16s">]</text>
+<text class="t" x="94" style="animation-delay:-8.09s">!</text>
+<text class="t" x="94" style="animation-delay:-8.02s">A</text>
+<text class="t" x="106" style="animation-delay:-8.182s">!</text>
+<text x="106" style="animation-delay:-8.112s">{</text>
+<text x="106" style="animation-delay:-8.042s">_</text>
+<text class="t" x="118" style="animation-delay:-8.134s">A</text>
+<text x="118" style="animation-delay:-8.064s">%</text>
+<text class="t" x="118" style="animation-delay:-7.994s">+</text>
+<text class="t" x="130" style="animation-delay:-8.086s">1</text>
+<text x="130" style="animation-delay:-8.016s">^</text>
+<text x="142" style="animation-delay:-8.038s">&lt;</text>
+<text class="t" x="142" style="animation-delay:-7.968s">&gt;</text>
+<text class="t" x="142" style="animation-delay:-7.898s">?</text>
+<text x="154" style="animation-delay:-7.99s">{</text>
+<text x="154" style="animation-delay:-7.92s">1</text>
+<text x="154" style="animation-delay:-7.85s">*</text>
+<text class="t" x="154" style="animation-delay:-7.78s">=</text>
+<text x="178" style="animation-delay:-7.894s">0</text>
+<text x="178" style="animation-delay:-7.824s">}</text>
+<text x="178" style="animation-delay:-7.754s">/</text>
+<text class="t" x="178" style="animation-delay:-7.684s">}</text>
+<text x="190" style="animation-delay:-7.846s">&gt;</text>
+<text x="190" style="animation-delay:-7.776s">0</text>
+<text x="190" style="animation-delay:-7.706s">A</text>
+<text x="202" style="animation-delay:-7.798s">-</text>
+<text x="202" style="animation-delay:-7.728s">A</text>
+<text x="202" style="animation-delay:-7.658s">&lt;</text>
+<text class="t" x="202" style="animation-delay:-7.588s">/</text>
+<text x="214" style="animation-delay:-7.75s">\</text>
+<text x="214" style="animation-delay:-7.68s">F</text>
+<text class="t" x="238" style="animation-delay:-7.654s">D</text>
+<text class="t" x="238" style="animation-delay:-7.584s">%</text>
+<text class="t" x="238" style="animation-delay:-7.514s">!</text>
+<text class="t" x="250" style="animation-delay:-7.606s">/</text>
+<text x="250" style="animation-delay:-7.536s">^</text>
+<text class="t" x="250" style="animation-delay:-7.466s">?</text>
+<text x="250" style="animation-delay:-7.396s">E</text>
+<text x="262" style="animation-delay:-7.558s">F</text>
+<text x="262" style="animation-delay:-7.488s">[</text>
+<text class="t" x="274" style="animation-delay:-7.51s">{</text>
+<text x="274" style="animation-delay:-7.44s">^</text>
+<text x="274" style="animation-delay:-7.37s">+</text>
+<text x="274" style="animation-delay:-7.3s">_</text>
+<text class="t" x="286" style="animation-delay:-7.462s">!</text>
+<text x="286" style="animation-delay:-7.392s">1</text>
+<text x="286" style="animation-delay:-7.322s">-</text>
+<text x="286" style="animation-delay:-7.252s">&gt;</text>
+<text x="298" style="animation-delay:-7.414s">+</text>
+<text x="298" style="animation-delay:-7.344s">#</text>
+<text x="298" style="animation-delay:-7.274s">*</text>
+<text x="298" style="animation-delay:-7.204s">}</text>
+<text class="t" x="322" style="animation-delay:-7.318s">F</text>
+<text class="t" x="322" style="animation-delay:-7.248s">!</text>
+<text x="322" style="animation-delay:-7.178s">?</text>
+<text x="334" style="animation-delay:-7.27s">F</text>
+<text class="t" x="334" style="animation-delay:-7.2s">A</text>
+<text class="t" x="334" style="animation-delay:-7.13s">^</text>
+<text x="346" style="animation-delay:-7.222s">F</text>
+<text x="346" style="animation-delay:-7.152s">D</text>
+<text x="346" style="animation-delay:-7.082s">?</text>
+<text class="t" x="370" style="animation-delay:-7.126s">0</text>
+<text x="370" style="animation-delay:-7.056s">E</text>
+<text x="370" style="animation-delay:-6.986s">+</text>
+<text x="394" style="animation-delay:-7.03s">1</text>
+<text x="394" style="animation-delay:-6.96s">*</text>
+<text x="406" style="animation-delay:-6.982s">!</text>
+<text class="t" x="406" style="animation-delay:-6.912s">D</text>
+<text x="418" style="animation-delay:-6.934s">&gt;</text>
+<text class="t" x="418" style="animation-delay:-6.864s">{</text>
+<text x="418" style="animation-delay:-6.794s">^</text>
+<text class="t" x="418" style="animation-delay:-6.724s">A</text>
+<text x="430" style="animation-delay:-6.886s">C</text>
+<text x="430" style="animation-delay:-6.816s">D</text>
+<text x="430" style="animation-delay:-6.746s">]</text>
+<text x="430" style="animation-delay:-6.676s">}</text>
+<text x="442" style="animation-delay:-6.838s">?</text>
+<text class="t" x="442" style="animation-delay:-6.768s">}</text>
+<text x="442" style="animation-delay:-6.698s">0</text>
+<text class="t" x="454" style="animation-delay:-6.79s">E</text>
+<text x="454" style="animation-delay:-6.72s">?</text>
+<text class="t" x="454" style="animation-delay:-6.65s">\</text>
+<text class="t" x="478" style="animation-delay:-6.694s">*</text>
+<text x="478" style="animation-delay:-6.624s">{</text>
+<text class="t" x="478" style="animation-delay:-6.554s">]</text>
+<text x="490" style="animation-delay:-6.646s">+</text>
+<text x="490" style="animation-delay:-6.576s">&gt;</text>
+<text class="t" x="490" style="animation-delay:-6.506s">#</text>
+<text class="t" x="502" style="animation-delay:-6.598s">1</text>
+<text x="502" style="animation-delay:-6.528s">%</text>
+<text x="514" style="animation-delay:-6.55s">#</text>
+<text x="514" style="animation-delay:-6.48s">E</text>
+<text x="526" style="animation-delay:-6.502s">0</text>
+<text class="t" x="526" style="animation-delay:-6.432s">+</text>
+<text x="538" style="animation-delay:-6.454s">0</text>
+<text class="t" x="538" style="animation-delay:-6.384s">F</text>
+<text x="538" style="animation-delay:-6.314s">!</text>
+<text x="550" style="animation-delay:-6.406s">&gt;</text>
+<text x="550" style="animation-delay:-6.336s">E</text>
+</g>
+<g class="l">
+<text x="222" style="animation-delay:-1.824s,-22.03s">H</text>
+<text x="234" style="animation-delay:-1.916s,-22.048s">i</text>
+<text x="246" style="animation-delay:-1.868s,-22.066s">,</text>
+<text x="270" style="animation-delay:-1.772s,-22.102s">I</text>
+<text x="282" style="animation-delay:-1.654s,-22.12s">'</text>
+<text x="294" style="animation-delay:-1.606s,-22.138s">m</text>
+<text class="n" x="318" style="animation-delay:-1.58s,-22.174s">P</text>
+<text class="n" x="330" style="animation-delay:-1.462s,-22.192s">i</text>
+<text class="n" x="342" style="animation-delay:-1.414s,-22.21s">e</text>
+<text class="n" x="354" style="animation-delay:-1.436s,-22.228s">r</text>
+<text class="n" x="366" style="animation-delay:-1.318s,-22.246s">r</text>
+<text class="n" x="378" style="animation-delay:-1.2s,-22.264s">e</text>
+<text x="46" style="animation-delay:-20.952s,-15.812s">P</text>
+<text x="58" style="animation-delay:-20.974s,-15.83s">y</text>
+<text x="70" style="animation-delay:-20.856s,-15.848s">t</text>
+<text x="82" style="animation-delay:-20.808s,-15.866s">h</text>
+<text x="94" style="animation-delay:-20.76s,-15.884s">o</text>
+<text x="106" style="animation-delay:-20.712s,-15.902s">n</text>
+<text x="130" style="animation-delay:-20.686s,-15.938s">·</text>
+<text x="154" style="animation-delay:-20.45s,-15.974s">J</text>
+<text x="166" style="animation-delay:-20.402s,-15.992s">a</text>
+<text x="178" style="animation-delay:-20.424s,-16.01s">v</text>
+<text x="190" style="animation-delay:-20.376s,-16.028s">a</text>
+<text x="202" style="animation-delay:-20.258s,-16.046s">S</text>
+<text x="214" style="animation-delay:-20.21s,-16.064s">c</text>
+<text x="226" style="animation-delay:-20.232s,-16.082s">r</text>
+<text x="238" style="animation-delay:-20.114s,-16.1s">i</text>
+<text x="250" style="animation-delay:-20.066s,-16.118s">p</text>
+<text x="262" style="animation-delay:-20.088s,-16.136s">t</text>
+<text x="286" style="animation-delay:-19.922s,-16.172s">·</text>
+<text x="310" style="animation-delay:-19.896s,-16.208s">T</text>
+<text x="322" style="animation-delay:-19.918s,-16.226s">y</text>
+<text x="334" style="animation-delay:-19.8s,-16.244s">p</text>
+<text x="346" style="animation-delay:-19.752s,-16.262s">e</text>
+<text x="358" style="animation-delay:-19.634s,-16.28s">S</text>
+<text x="370" style="animation-delay:-19.656s,-16.298s">c</text>
+<text x="382" style="animation-delay:-19.608s,-16.316s">r</text>
+<text x="394" style="animation-delay:-19.56s,-16.334s">i</text>
+<text x="406" style="animation-delay:-19.512s,-16.352s">p</text>
+<text x="418" style="animation-delay:-19.534s,-16.37s">t</text>
+<text x="442" style="animation-delay:-19.368s,-16.406s">d</text>
+<text x="454" style="animation-delay:-19.39s,-16.424s">e</text>
+<text x="466" style="animation-delay:-19.202s,-16.442s">v</text>
+<text x="478" style="animation-delay:-19.224s,-16.46s">e</text>
+<text x="490" style="animation-delay:-19.176s,-16.478s">l</text>
+<text x="502" style="animation-delay:-19.058s,-16.496s">o</text>
+<text x="514" style="animation-delay:-19.15s,-16.514s">p</text>
+<text x="526" style="animation-delay:-19.102s,-16.532s">e</text>
+<text x="538" style="animation-delay:-19.054s,-16.55s">r</text>
+<text x="46" style="animation-delay:-14.664s,-9.29s">B</text>
+<text x="58" style="animation-delay:-14.686s,-9.308s">u</text>
+<text x="70" style="animation-delay:-14.638s,-9.326s">i</text>
+<text x="82" style="animation-delay:-14.52s,-9.344s">l</text>
+<text x="94" style="animation-delay:-14.542s,-9.362s">d</text>
+<text x="106" style="animation-delay:-14.424s,-9.38s">i</text>
+<text x="118" style="animation-delay:-14.446s,-9.398s">n</text>
+<text x="130" style="animation-delay:-14.398s,-9.416s">g</text>
+<text x="154" style="animation-delay:-14.302s,-9.452s">A</text>
+<text x="166" style="animation-delay:-14.254s,-9.47s">P</text>
+<text x="178" style="animation-delay:-14.276s,-9.488s">I</text>
+<text x="190" style="animation-delay:-14.158s,-9.506s">s</text>
+<text x="214" style="animation-delay:-14.132s,-9.542s">w</text>
+<text x="226" style="animation-delay:-13.944s,-9.56s">i</text>
+<text x="238" style="animation-delay:-13.896s,-9.578s">t</text>
+<text x="250" style="animation-delay:-13.918s,-9.596s">h</text>
+<text x="274" style="animation-delay:-13.752s,-9.632s">N</text>
+<text x="286" style="animation-delay:-13.704s,-9.65s">o</text>
+<text x="298" style="animation-delay:-13.726s,-9.668s">d</text>
+<text x="310" style="animation-delay:-13.608s,-9.686s">e</text>
+<text x="322" style="animation-delay:-13.7s,-9.704s">.</text>
+<text x="334" style="animation-delay:-13.652s,-9.722s">j</text>
+<text x="346" style="animation-delay:-13.464s,-9.74s">s</text>
+<text x="358" style="animation-delay:-13.486s,-9.758s">,</text>
+<text x="382" style="animation-delay:-13.32s,-9.794s">E</text>
+<text x="394" style="animation-delay:-13.342s,-9.812s">x</text>
+<text x="406" style="animation-delay:-13.294s,-9.83s">p</text>
+<text x="418" style="animation-delay:-13.316s,-9.848s">r</text>
+<text x="430" style="animation-delay:-13.198s,-9.866s">e</text>
+<text x="442" style="animation-delay:-13.15s,-9.884s">s</text>
+<text x="454" style="animation-delay:-13.102s,-9.902s">s</text>
+<text x="478" style="animation-delay:-13.006s,-9.938s">&amp;</text>
+<text x="502" style="animation-delay:-12.98s,-9.974s">N</text>
+<text x="514" style="animation-delay:-12.862s,-9.992s">e</text>
+<text x="526" style="animation-delay:-12.884s,-10.01s">x</text>
+<text x="538" style="animation-delay:-12.836s,-10.028s">t</text>
+<text x="550" style="animation-delay:-12.648s,-10.046s">.</text>
+<text x="562" style="animation-delay:-12.67s,-10.064s">j</text>
+<text x="574" style="animation-delay:-12.622s,-10.082s">s</text>
+<text x="46" style="animation-delay:-8.282s,-2.972s">A</text>
+<text x="58" style="animation-delay:-8.164s,-2.99s">u</text>
+<text x="70" style="animation-delay:-8.116s,-3.008s">t</text>
+<text x="82" style="animation-delay:-8.138s,-3.026s">o</text>
+<text x="94" style="animation-delay:-7.95s,-3.044s">m</text>
+<text x="106" style="animation-delay:-7.972s,-3.062s">a</text>
+<text x="118" style="animation-delay:-7.924s,-3.08s">t</text>
+<text x="130" style="animation-delay:-7.946s,-3.098s">i</text>
+<text x="142" style="animation-delay:-7.828s,-3.116s">n</text>
+<text x="154" style="animation-delay:-7.71s,-3.134s">g</text>
+<text x="178" style="animation-delay:-7.614s,-3.17s">w</text>
+<text x="190" style="animation-delay:-7.636s,-3.188s">i</text>
+<text x="202" style="animation-delay:-7.518s,-3.206s">t</text>
+<text x="214" style="animation-delay:-7.61s,-3.224s">h</text>
+<text x="238" style="animation-delay:-7.444s,-3.26s">N</text>
+<text x="250" style="animation-delay:-7.326s,-3.278s">o</text>
+<text x="262" style="animation-delay:-7.418s,-3.296s">t</text>
+<text x="274" style="animation-delay:-7.23s,-3.314s">i</text>
+<text x="286" style="animation-delay:-7.182s,-3.332s">o</text>
+<text x="298" style="animation-delay:-7.134s,-3.35s">n</text>
+<text x="322" style="animation-delay:-7.108s,-3.386s">A</text>
+<text x="334" style="animation-delay:-7.06s,-3.404s">P</text>
+<text x="346" style="animation-delay:-7.012s,-3.422s">I</text>
+<text x="370" style="animation-delay:-6.916s,-3.458s">&amp;</text>
+<text x="394" style="animation-delay:-6.89s,-3.494s">G</text>
+<text x="406" style="animation-delay:-6.842s,-3.512s">i</text>
+<text x="418" style="animation-delay:-6.654s,-3.53s">t</text>
+<text x="430" style="animation-delay:-6.606s,-3.548s">H</text>
+<text x="442" style="animation-delay:-6.628s,-3.566s">u</text>
+<text x="454" style="animation-delay:-6.58s,-3.584s">b</text>
+<text x="478" style="animation-delay:-6.484s,-3.62s">A</text>
+<text x="490" style="animation-delay:-6.436s,-3.638s">c</text>
+<text x="502" style="animation-delay:-6.458s,-3.656s">t</text>
+<text x="514" style="animation-delay:-6.41s,-3.674s">i</text>
+<text x="526" style="animation-delay:-6.362s,-3.692s">o</text>
+<text x="538" style="animation-delay:-6.244s,-3.71s">n</text>
+<text x="550" style="animation-delay:-6.266s,-3.728s">s</text>
+</g>
+<g class="g">
+<text x="222" style="animation-delay:-22.03s">[</text>
+<text x="234" style="animation-delay:-22.048s">]</text>
+<text x="246" style="animation-delay:-22.066s">F</text>
+<text x="270" style="animation-delay:-22.102s">-</text>
+<text x="282" style="animation-delay:-22.12s">&lt;</text>
+<text x="294" style="animation-delay:-22.138s">+</text>
+<text x="318" style="animation-delay:-22.174s">*</text>
+<text x="330" style="animation-delay:-22.192s">1</text>
+<text x="342" style="animation-delay:-22.21s">&gt;</text>
+<text x="354" style="animation-delay:-22.228s">[</text>
+<text x="366" style="animation-delay:-22.246s">}</text>
+<text x="378" style="animation-delay:-22.264s">}</text>
+<text x="46" style="animation-delay:-15.812s">F</text>
+<text x="58" style="animation-delay:-15.83s">#</text>
+<text x="70" style="animation-delay:-15.848s">B</text>
+<text x="82" style="animation-delay:-15.866s">A</text>
+<text x="94" style="animation-delay:-15.884s">=</text>
+<text x="106" style="animation-delay:-15.902s">&gt;</text>
+<text x="130" style="animation-delay:-15.938s">0</text>
+<text x="154" style="animation-delay:-15.974s">*</text>
+<text x="166" style="animation-delay:-15.992s">+</text>
+<text x="178" style="animation-delay:-16.01s">/</text>
+<text x="190" style="animation-delay:-16.028s">?</text>
+<text x="202" style="animation-delay:-16.046s">_</text>
+<text x="214" style="animation-delay:-16.064s">1</text>
+<text x="226" style="animation-delay:-16.082s">#</text>
+<text x="238" style="animation-delay:-16.1s">?</text>
+<text x="250" style="animation-delay:-16.118s">_</text>
+<text x="262" style="animation-delay:-16.136s">}</text>
+<text x="286" style="animation-delay:-16.172s">A</text>
+<text x="310" style="animation-delay:-16.208s">+</text>
+<text x="322" style="animation-delay:-16.226s">1</text>
+<text x="334" style="animation-delay:-16.244s">[</text>
+<text x="346" style="animation-delay:-16.262s">#</text>
+<text x="358" style="animation-delay:-16.28s">#</text>
+<text x="370" style="animation-delay:-16.298s">D</text>
+<text x="382" style="animation-delay:-16.316s">0</text>
+<text x="394" style="animation-delay:-16.334s">+</text>
+<text x="406" style="animation-delay:-16.352s">C</text>
+<text x="418" style="animation-delay:-16.37s">0</text>
+<text x="442" style="animation-delay:-16.406s">{</text>
+<text x="454" style="animation-delay:-16.424s">]</text>
+<text x="466" style="animation-delay:-16.442s">&gt;</text>
+<text x="478" style="animation-delay:-16.46s">0</text>
+<text x="490" style="animation-delay:-16.478s">{</text>
+<text x="502" style="animation-delay:-16.496s">-</text>
+<text x="514" style="animation-delay:-16.514s">]</text>
+<text x="526" style="animation-delay:-16.532s">]</text>
+<text x="538" style="animation-delay:-16.55s">0</text>
+<text x="46" style="animation-delay:-9.29s">+</text>
+<text x="58" style="animation-delay:-9.308s">A</text>
+<text x="70" style="animation-delay:-9.326s">B</text>
+<text x="82" style="animation-delay:-9.344s">%</text>
+<text x="94" style="animation-delay:-9.362s">_</text>
+<text x="106" style="animation-delay:-9.38s">\</text>
+<text x="118" style="animation-delay:-9.398s">B</text>
+<text x="130" style="animation-delay:-9.416s">[</text>
+<text x="154" style="animation-delay:-9.452s">]</text>
+<text x="166" style="animation-delay:-9.47s">=</text>
+<text x="178" style="animation-delay:-9.488s">D</text>
+<text x="190" style="animation-delay:-9.506s">#</text>
+<text x="214" style="animation-delay:-9.542s">%</text>
+<text x="226" style="animation-delay:-9.56s">/</text>
+<text x="238" style="animation-delay:-9.578s">{</text>
+<text x="250" style="animation-delay:-9.596s">&lt;</text>
+<text x="274" style="animation-delay:-9.632s">A</text>
+<text x="286" style="animation-delay:-9.65s">D</text>
+<text x="298" style="animation-delay:-9.668s">\</text>
+<text x="310" style="animation-delay:-9.686s">{</text>
+<text x="322" style="animation-delay:-9.704s">-</text>
+<text x="334" style="animation-delay:-9.722s">=</text>
+<text x="346" style="animation-delay:-9.74s">^</text>
+<text x="358" style="animation-delay:-9.758s">D</text>
+<text x="382" style="animation-delay:-9.794s">F</text>
+<text x="394" style="animation-delay:-9.812s">}</text>
+<text x="406" style="animation-delay:-9.83s">1</text>
+<text x="418" style="animation-delay:-9.848s">1</text>
+<text x="430" style="animation-delay:-9.866s">1</text>
+<text x="442" style="animation-delay:-9.884s">&lt;</text>
+<text x="454" style="animation-delay:-9.902s">%</text>
+<text x="478" style="animation-delay:-9.938s">=</text>
+<text x="502" style="animation-delay:-9.974s">\</text>
+<text x="514" style="animation-delay:-9.992s">#</text>
+<text x="526" style="animation-delay:-10.01s">/</text>
+<text x="538" style="animation-delay:-10.028s">F</text>
+<text x="550" style="animation-delay:-10.046s">-</text>
+<text x="562" style="animation-delay:-10.064s">*</text>
+<text x="574" style="animation-delay:-10.082s">[</text>
+<text x="46" style="animation-delay:-2.972s">/</text>
+<text x="58" style="animation-delay:-2.99s">?</text>
+<text x="70" style="animation-delay:-3.008s">D</text>
+<text x="82" style="animation-delay:-3.026s">A</text>
+<text x="94" style="animation-delay:-3.044s">?</text>
+<text x="106" style="animation-delay:-3.062s">]</text>
+<text x="118" style="animation-delay:-3.08s">F</text>
+<text x="130" style="animation-delay:-3.098s">1</text>
+<text x="142" style="animation-delay:-3.116s">{</text>
+<text x="154" style="animation-delay:-3.134s">+</text>
+<text x="178" style="animation-delay:-3.17s">}</text>
+<text x="190" style="animation-delay:-3.188s">+</text>
+<text x="202" style="animation-delay:-3.206s">E</text>
+<text x="214" style="animation-delay:-3.224s">=</text>
+<text x="238" style="animation-delay:-3.26s">_</text>
+<text x="250" style="animation-delay:-3.278s">*</text>
+<text x="262" style="animation-delay:-3.296s">?</text>
+<text x="274" style="animation-delay:-3.314s">B</text>
+<text x="286" style="animation-delay:-3.332s">_</text>
+<text x="298" style="animation-delay:-3.35s">&lt;</text>
+<text x="322" style="animation-delay:-3.386s">%</text>
+<text x="334" style="animation-delay:-3.404s">[</text>
+<text x="346" style="animation-delay:-3.422s">-</text>
+<text x="370" style="animation-delay:-3.458s">/</text>
+<text x="394" style="animation-delay:-3.494s">+</text>
+<text x="406" style="animation-delay:-3.512s">E</text>
+<text x="418" style="animation-delay:-3.53s">%</text>
+<text x="430" style="animation-delay:-3.548s">^</text>
+<text x="442" style="animation-delay:-3.566s">1</text>
+<text x="454" style="animation-delay:-3.584s">[</text>
+<text x="478" style="animation-delay:-3.62s">D</text>
+<text x="490" style="animation-delay:-3.638s">/</text>
+<text x="502" style="animation-delay:-3.656s">C</text>
+<text x="514" style="animation-delay:-3.674s">0</text>
+<text x="526" style="animation-delay:-3.692s">D</text>
+<text x="538" style="animation-delay:-3.71s">{</text>
+<text x="550" style="animation-delay:-3.728s">A</text>
+</g>
+<g class="cx"><g class="cb"><rect x="0.25" y="-19" width="8" height="25" rx="4" fill="#e3b7e6" opacity="0.55"/><rect x="3" y="-18" width="2.5" height="23" rx="1" fill="#533861"/></g></g>
+</g>
+<g class="st" transform="translate(0 37)">
+<text x="72" fill="#765082">H</text>
+<text x="84" fill="#765082">i</text>
+<text x="96" fill="#765082">,</text>
+<text x="120" fill="#765082">I</text>
+<text x="132" fill="#765082">'</text>
+<text x="144" fill="#765082">m</text>
+<text x="168" fill="#533861" font-weight="700">P</text>
+<text x="180" fill="#533861" font-weight="700">i</text>
+<text x="192" fill="#533861" font-weight="700">e</text>
+<text x="204" fill="#533861" font-weight="700">r</text>
+<text x="216" fill="#533861" font-weight="700">r</text>
+<text x="228" fill="#533861" font-weight="700">e</text>
+<text x="252" fill="#765082">·</text>
+<text x="276" fill="#765082">P</text>
+<text x="288" fill="#765082">y</text>
+<text x="300" fill="#765082">t</text>
+<text x="312" fill="#765082">h</text>
+<text x="324" fill="#765082">o</text>
+<text x="336" fill="#765082">n</text>
+<text x="348" fill="#765082">/</text>
+<text x="360" fill="#765082">J</text>
+<text x="372" fill="#765082">S</text>
+<text x="384" fill="#765082">/</text>
+<text x="396" fill="#765082">T</text>
+<text x="408" fill="#765082">S</text>
+<text x="432" fill="#765082">d</text>
+<text x="444" fill="#765082">e</text>
+<text x="456" fill="#765082">v</text>
+<text x="468" fill="#765082">e</text>
+<text x="480" fill="#765082">l</text>
+<text x="492" fill="#765082">o</text>
+<text x="504" fill="#765082">p</text>
+<text x="516" fill="#765082">e</text>
+<text x="528" fill="#765082">r</text>
+<rect x="537" y="-18" width="2.5" height="23" rx="1" fill="#533861"/>
+</g>
+</svg>

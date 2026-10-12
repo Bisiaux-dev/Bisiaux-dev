@@ -1,0 +1,56 @@
+# Dessine le graphe de contributions en ciel de nuit (variantes sombre + clair) avec
+# scripts/gen_contrib.py et le publie sur la branche "output", lue par le README :
+#   https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-dark.svg
+#   https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-light.svg
+
+name: Contributions
+
+on:
+  schedule:
+    - cron: "23 2 * * *" # chaque nuit à 02:23 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: # 1er rendu dès que le générateur ou ce workflow change
+      - scripts/gen_contrib.py
+      - .github/workflows/contrib.yml
+
+permissions:
+  contents: write # seul droit requis : pousser sur la branche output
+
+concurrency:
+  group: contrib
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      # Pas de setup-python : le script n'utilise que la bibliothèque standard (Python 3.8+),
+      # et le python3 préinstallé sur ubuntu-latest suffit. Une étape de moins, rien à télécharger.
+      # Si une étape échoue (auto-test, API, calendrier vide...), rien n'est écrit et le job
+      # s'arrête : la branche output garde les images de la veille.
+      # Auto-test : calendriers synthétiques, dont l'année réelle + une rafale de deux semaines
+      # (la trace ne doit jamais revenir en arrière ni s'effondrer). Sans réseau, < 1 s.
+      - name: Auto-test du dessin
+        run: python3 scripts/gen_contrib.py --self-test
+
+      - name: Générer le ciel (sombre + clair)
+        run: python3 scripts/gen_contrib.py --user ${{ github.repository_owner }} --out dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # keep_history false : la branche output ne contient que dist/ (les anciens
+      # snake-*.svg disparaissent au premier passage).
+      - name: Publier sur la branche output
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+          keep_history: false
+          commit_message: "chore(contrib): régénération quotidienne"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
