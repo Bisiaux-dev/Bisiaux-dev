@@ -4,7 +4,8 @@
            lilas #8f6a99 · mauve #a87fb0 · glow #e3b7e6 · éclair #fbd4ff · givre #f6ebf7
   En-tête (assets/header-*.svg, versionnés sur main) : modifier LINES dans scripts/gen_header.py,
     puis  python scripts/gen_header.py --out assets  et committer les deux SVG.
-  Ciel des contributions : régénéré chaque nuit sur la branche output par
+  Ciel des contributions : une étoile par jour de l'année écoulée, d'autant plus brillante que
+    le jour a compté de contributions ; régénéré chaque nuit sur la branche output par
     .github/workflows/contrib.yml (scripts/gen_contrib.py).
   srcset : toujours des URL absolues (un chemin relatif n'y est pas réécrit par GitHub) et les
     virgules écrites %2C (le nettoyeur de GitHub coupe l'URL à la première virgule).
@@ -22,7 +23,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-light.svg">
-    <img alt="GitHub contributions of Bisiaux-dev over the last year, drawn as a night sky: each star is a day of activity, a light trace runs through them in order and a blinking cursor marks today." src="https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-light.svg">
+    <img alt="GitHub contributions of Bisiaux-dev over the last year, drawn as a night sky: one star per day, from the oldest day on the left to today on the right, and the more contributions that day, the brighter the star. A blinking cursor marks today." src="https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-light.svg">
   </picture>
 </p>
 

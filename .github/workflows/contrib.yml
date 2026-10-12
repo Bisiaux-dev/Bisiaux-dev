@@ -33,8 +33,9 @@ jobs:
       # et le python3 préinstallé sur ubuntu-latest suffit. Une étape de moins, rien à télécharger.
       # Si une étape échoue (auto-test, API, calendrier vide...), rien n'est écrit et le job
       # s'arrête : la branche output garde les images de la veille.
-      # Auto-test : calendriers synthétiques, dont l'année réelle + une rafale de deux semaines
-      # (la trace ne doit jamais revenir en arrière ni s'effondrer). Sans réseau, < 1 s.
+      # Auto-test : calendriers synthétiques (vide, épars, dense, complet...). Vérifie une étoile
+      # par jour, plus brillante quand le jour compte plus de contributions, et les budgets
+      # de taille. Sans réseau, quelques secondes.
       - name: Auto-test du dessin
         run: python3 scripts/gen_contrib.py --self-test
 
