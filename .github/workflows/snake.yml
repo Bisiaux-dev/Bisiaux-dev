@@ -1,0 +1,47 @@
+# Génère le serpent qui mange le graphe de contributions (variantes sombre + clair)
+# et le publie sur la branche "output", lue par le README :
+#   https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/snake-dark.svg
+#   https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/snake-light.svg
+
+name: Snake
+
+on:
+  schedule:
+    - cron: "23 2 * * *" # chaque nuit à 02:23 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/snake.yml] # 1er rendu dès que le workflow est commité
+
+permissions:
+  contents: write # seul droit requis : pousser sur la branche output
+
+concurrency:
+  group: snake
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Palette tirée de l'avatar. Le serpent reste toujours l'élément le plus contrasté :
+      #   sombre : cases aubergine -> violet, plafonnées à #a87fb0 ; serpent = éclair #fbd4ff
+      #   clair  : cases givre -> violet profond, plafonnées à #533861 ; serpent = encre de nuit #0b0910
+      # color_dots = exactement 5 couleurs : 0 contribution, puis de la plus faible à la plus forte.
+      - name: Générer le serpent (sombre + clair)
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake-dark.svg?color_snake=#fbd4ff&color_dots=#281838,#533861,#765082,#8f6a99,#a87fb0
+            dist/snake-light.svg?color_snake=#0b0910&color_dots=#f6ebf7,#e3b7e6,#a87fb0,#765082,#533861
+
+      - name: Publier sur la branche output
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "chore(snake): régénération quotidienne"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
