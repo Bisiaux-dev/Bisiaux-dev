@@ -23,12 +23,15 @@ positions décalées, départage par les dates) : des constellations, jamais un 
 Une nébuleuse violette par groupe, nuages d'orage en fond (décor fixe), mois discrets en bas.
 
 Mouvement (calme, CSS @keyframes seulement) : les étoiles restent toujours visibles et
-scintillent doucement. Les liens se tracent l'un après l'autre (stroke-dashoffset), dans
-l'ordre chronologique (date la plus récente de la paire, puis la plus ancienne) ; au-delà de
-60 liens, par semaine. À chaque trait, ses deux étoiles s'illuminent puis reviennent à leur
-éclat. Après le dernier : tout reste affiché quelques secondes, puis seuls les liens
-s'effacent (les étoiles restent) et la boucle reprend. Cycle de 16 à 26 s quelle que soit
-l'année. Le temps 0 tombe pendant la pose : un rendu sans animation (aperçu, vignette) montre
+scintillent doucement ; tant qu'une étoile n'est pas liée, elle est atténuée (80 %).
+Propagation : une constellation après l'autre, de la plus ancienne à la plus récente (0,5 s
+de pause entre deux) ; chacune part de son jour le plus ancien ; un trait part toujours d'une
+étoile déjà allumée et se trace à vitesse constante, la même pour tous (~0,55 s entre deux
+cases voisines) ; une étoile ne s'allume (pleine opacité,
+éclair) qu'à l'instant où un trait complet l'atteint (la racine : à la fin de son premier
+trait). Après la dernière : tout reste affiché quelques secondes, puis seuls les liens
+s'effacent (les étoiles restent, atténuées) et la boucle reprend. Cycle de 16 à 60 s quelle
+que soit l'année (au besoin, la vitesse commune augmente). Le temps 0 tombe pendant la pose : un rendu sans animation (aperçu, vignette) montre
 toutes les constellations. Année sans lien : étoiles seules, scintillement doux.
 prefers-reduced-motion : image fixe, tous les liens tracés.
 
@@ -163,7 +166,7 @@ MONTH_NAMES = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
 # Éclat
-STAR_SCALE = 0.5             # taille des étoiles (cœur, halo, aigrette, reflet, éclair) : 1 = d'origine
+STAR_SCALE = 0.425             # taille des étoiles (cœur, halo, aigrette, reflet, éclair) : 1 = d'origine
 UNLINKED = 0.8               # opacité d'une étoile tant qu'elle n'est pas liée (1 dès son 1er trait)
 FLOOR = 0.2                  # t d'un jour à 1 contribution (0 = poussière, 1 = record)
 LADDER = 0.004               # écart minimal de t entre deux nombres distincts (stricte croissance)
@@ -180,26 +183,27 @@ SOFT_HALO_OP = (0.22, 0.38)  #   et opacité halo_op * (0,22 + 0,38 t) (le reste
 DENSE_NEB = 0.75             # année dense : nébuleuses des seules constellations, plus discrètes
 # aigrettes : rapport épaisseur / longueur (0,3 r / L) arrondi au plus proche de ces variantes
 SPARK_K = (0.17, 0.14, 0.115, 0.095, 0.08, 0.067, 0.055)
-DUST_R = (0.25, 0.2)         # rayon des grains : 0,25 + 0,2 * hachage (< plus petit cœur, 0,48)
+DUST_R = (0.21, 0.17)        # rayon des grains : 0,21 + 0,17 * hachage (< plus petit cœur, 0,41)
 DUST_O = (0.22, 0.38)        # opacité des grains
 
 # Animation (secondes)
-MAX_STEPS = 60               # au-delà de 60 liens, ils se tracent par semaine
-LEAD = 0.8                   # ciel seul avant le premier trait
-DRAW_SPAN = 13.0             # durée visée pour tracer tous les liens
-GAP = (0.26, 1.1)            # écart entre deux traits (bornes)
-DRAW = (0.5, 1.0)            # durée d'un trait (bornes) ; 1,6 x l'écart : les traits s'enchaînent
+LEAD = 0.8                   # ciel seul avant les premiers traits
+SPEED = 29.0                 # vitesse de tracé (unités/s), la même pour tous : ~0,55 s par case
+BETWEEN = 0.5                # pause entre deux constellations (l'une après l'autre)
+PROP_MAX = 52.0              # toutes les constellations à la suite : au-delà, la vitesse augmente
+LIT_EDGE = 0.05              # l'étoile passe à pleine opacité dans les 0,05 s qui finissent le trait
+FLASH_RISE = 0.12            # l'éclair monte en 0,12 s, une fois le trait complet
 HOLD = 3.2                   # toutes les constellations restent affichées
 FADE = 1.8                   # effacement des liens
 REST = 1.0                   # étoiles seules avant la boucle suivante
-T_MIN, T_MAX = 16.0, 26.0    # bornes du cycle
-FLASH_HOLD = 0.15            # l'éclat reste au plus haut jusqu'à 0,15 s après le trait
+T_MIN, T_MAX = 16.0, 60.0    # bornes du cycle
+FLASH_HOLD = 0.15            # puis reste au plus haut 0,15 s
 FLASH_DECAY = 1.0            # retour à l'éclat de base 1 s après la fin du trait
 DASH_HIDDEN = 1.2            # dashoffset d'un lien non tracé (pathLength = 1, tirets « 1 2 »)
 
-MAX_BYTES = 150 * 1024
+MAX_BYTES = 220 * 1024        # un trait = une keyframe : année pleine d'un seul dépôt ~190 Ko
 MAX_ELEMS = 4000
-MAX_ANIM = 1200              # nœuds animés (éléments portant une animation CSS)
+MAX_ANIM = 1700              # nœuds animés (éléments portant une animation CSS)
 
 
 class AuthError(Exception):
@@ -824,22 +828,78 @@ def spanning_forest(edges, pos):
     return keep
 
 
-def timeline(n_steps):
-    """Début de chaque étape, durée d'un trait, effacement et cycle (secondes)."""
-    gap = clamp(DRAW_SPAN / n_steps, *GAP)
-    draw = clamp(1.6 * gap, *DRAW)
-    lead, hold, rest = LEAD, HOLD, REST
-    raw = lead + (n_steps - 1) * gap + draw + hold + FADE + rest
-    if raw < T_MIN:                      # peu de liens : on étire les pauses, pas les traits
+def propagate(stars, links, pos):
+    """Propagation, une constellation (arbre) après l'autre, de la plus ancienne à la plus
+    récente, BETWEEN s de pause entre deux ; dans chacune, racine = jour le plus ancien ; un
+    trait part de l'étoile déjà allumée vers la suivante, en longueur / vitesse (vitesse
+    commune) ; une étoile s'allume à la fin du trait complet qui l'atteint (la racine : à la
+    fin de son premier trait).
+    Renvoie (traits, {date: indice du trait qui l'allume}, chronologie) ; tout lien hors de
+    l'arbre (impossible en temps normal) est quand même tracé, pour que l'auto-test le voie."""
+    if not links:
+        return [], {}, None
+    adj = {}
+    for a, b in links:
+        adj.setdefault(a, set()).add(b)
+        adj.setdefault(b, set()).add(a)
+    xy = {d: (r1(pos[d][0]), r1(pos[d][1])) for d in adj}
+
+    def length(a, b):
+        return math.hypot(xy[a][0] - xy[b][0], xy[a][1] - xy[b][1])
+    seen, comps = set(), []
+    for root in sorted(adj):                 # le premier non vu est le plus ancien du groupe
+        if root in seen:
+            continue
+        seen.add(root)
+        order, dist, parent, i = [root], {root: 0.0}, {root: None}, 0
+        while i < len(order):
+            u = order[i]
+            i += 1
+            for v in sorted(adj[u]):
+                if v not in seen:
+                    seen.add(v)
+                    parent[v], dist[v] = u, dist[u] + length(u, v)
+                    order.append(v)
+        comps.append((root, order, dist, parent))
+    depth = sum(max(c[2].values()) for c in comps)       # comps : racines par date croissante
+    # pauses : 0,5 s, ramenées pour ne jamais dépasser 25 % du temps (année en mosaïque)
+    between = min(BETWEEN, 0.25 * PROP_MAX / max(len(comps) - 1, 1))
+    speed = max(SPEED, depth / (PROP_MAX - between * (len(comps) - 1)))
+    draws, tree, t0 = [], [], LEAD
+    for root, order, dist, parent in comps:
+        for v in order[1:]:
+            u = parent[v]
+            draws.append({"a": u, "b": v, "s": t0 + dist[u] / speed, "e": t0 + dist[v] / speed})
+            tree.append(frozenset((u, v)))
+        t0 += max(dist.values()) / speed + between        # la suivante quand celle-ci est finie
+    left = list(tree)
+    for a, b in links:                       # liens hors arbre (cycle, doublon) : tracés aussi
+        k = frozenset((a, b))
+        if k in left:
+            left.remove(k)
+        else:
+            src = min((a, b), key=lambda d: next((w["e"] for w in draws if w["b"] == d), 0.0))
+            dst = b if src == a else a
+            s0 = next((w["e"] for w in draws if w["b"] == src), LEAD)
+            draws.append({"a": src, "b": dst, "s": s0, "e": s0 + length(a, b) / speed})
+    draws.sort(key=lambda w: (w["e"], w["s"], w["a"], w["b"]))
+    lights = {}
+    for i, w in enumerate(draws):
+        w["i"] = i
+        lights.setdefault(w["b"], i)         # l'étoile atteinte : à la fin de son trait
+    for i, w in enumerate(draws):            # la racine : à la fin de son premier trait
+        lights.setdefault(w["a"], i)
+    last = max(w["e"] for w in draws)
+    hold, rest = HOLD, REST
+    raw = last + FLASH_DECAY + hold + FADE + rest
+    if raw < T_MIN:                          # peu de liens : on étire les pauses, pas les traits
         extra = T_MIN - raw
-        lead, hold, rest = lead + 0.25 * extra, hold + 0.45 * extra, rest + 0.3 * extra
-    starts = [lead + i * gap for i in range(n_steps)]
-    end_draw = starts[-1] + draw
-    fade0 = end_draw + hold
-    total = fade0 + FADE + rest
+        hold, rest = hold + 0.6 * extra, rest + 0.4 * extra
+    fade0 = last + FLASH_DECAY + hold
     # temps 0 du document au milieu de la pose : un rendu figé montre les constellations
-    return {"starts": starts, "draw": draw, "gap": gap, "fade0": fade0, "fade1": fade0 + FADE,
-            "T": total, "phase": end_draw + hold / 2.0}
+    return draws, lights, {"T": fade0 + FADE + rest, "fade0": fade0, "fade1": fade0 + FADE,
+                           "phase": fade0 - hold / 2.0, "speed": speed, "last": last,
+                           "between": between}
 
 
 def month_width(label, fs):
@@ -911,16 +971,7 @@ def build_scene(days):
                          "g": int(h01("dust", d["date"], "tw") * 3)})
     # liens : arbre couvrant minimal, puis ordre chronologique (récent, puis ancien)
     links = sorted(spanning_forest(eligible(stars), pos), key=lambda e: (e[1], e[0]))
-    col = {d["date"]: d["col"] for d in days}
-    if len(links) <= MAX_STEPS:
-        steps = [[e] for e in links]
-    else:                                        # beaucoup de liens : une étape par semaine
-        steps = []
-        for e in links:
-            if steps and col[steps[-1][0][1]] == col[e[1]]:
-                steps[-1].append(e)
-            else:
-                steps.append([e])
+    draws, lights, tl = propagate(stars, links, pos)
     # groupes -> nébuleuses : une par constellation (et par étoile isolée si l'année est
     # éparse) ; année dense : constellations seulement, plus discrètes
     forest = Forest()
@@ -943,7 +994,7 @@ def build_scene(days):
             nebulae.append({"x": cx, "y": cy, "rx": rx, "ry": ry,
                             "o": (0.4 + 0.6 * t) * (DENSE_NEB if dense else 1.0)})
     return {"days": days, "pos": pos, "stars": stars, "dust": dust, "links": links,
-            "steps": steps, "tl": timeline(len(steps)) if steps else None,
+            "draws": draws, "lights": lights, "tl": tl,
             "nebulae": nebulae, "clouds": clouds(), "months": month_marks(days)}
 
 
@@ -961,27 +1012,16 @@ def spark_path(k):
     return "M-1 0q%s -%s 1 -1q%s %s 1 1q-%s %s -1 1q-%s -%s -1 -1z" % (a, b, b, a, a, b, b, a)
 
 
-def first_steps(steps):
-    """{date: indice de l'étape où l'étoile reçoit son premier trait}."""
-    first = {}
-    for i, step in enumerate(steps or ()):
-        for e in step:
-            for d in e:
-                first.setdefault(d, i)
-    return first
-
-
 def render(scene, theme, login):
     th = THEMES[theme]
-    tl, steps = scene["tl"], scene["steps"]
+    tl, draws, lights = scene["tl"], scene["draws"], scene["lights"]
     out = []
     o = out.append
-    # étoile pas (encore) liée : atténuée (UNLINKED) ; elle s'allume avec son premier trait
-    # (classe b<étape>) et s'atténue de nouveau quand les liens s'effacent ; jamais liée : d
-    first = first_steps(steps)
-
+    # étoile pas (encore) liée : atténuée (UNLINKED) ; elle prend la keyframe e<i> du trait
+    # qui l'allume (pleine opacité à la fin du trait complet, atténuée quand les liens
+    # s'effacent) ; jamais liée : classe d
     def lit(date):
-        return ' class="b%d"' % first[date] if date in first else ' class="d"'
+        return ' class="e%d"' % lights[date] if date in lights else ' class="d"'
     o('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d" '
       'fill="none" role="img" aria-labelledby="t d">' % (W, H, W, H))
     o('<title id="t">%s</title>' % escape(
@@ -1007,23 +1047,23 @@ def render(scene, theme, login):
         css.append("@keyframes lf{0%%,%s%%{opacity:1}%s%%,100%%{opacity:0}}"
                    % (pct(tl["fade0"], T), pct(tl["fade1"], T)))
         css.append(".L{animation:lf %s}" % anim)
-        for i, s in enumerate(tl["starts"]):
-            css.append("@keyframes k%d{0%%,%s%%{stroke-dashoffset:%spx}%s%%,100%%{"
-                       "stroke-dashoffset:0}}.k%d{animation:k%d %s}"
-                       % (i, pct(s, T), f1(DASH_HIDDEN), pct(s + tl["draw"], T), i, i, anim))
+        lin = "%ss linear -%ss infinite" % (f2(T), f2(ph))
+        dim = f2(UNLINKED)
+        # un trait = une keyframe : caché jusqu'à son départ, tracé à vitesse constante
+        # (linéaire) ; la même keyframe allume l'étoile qu'il atteint (opacité pleine à la fin
+        # seulement) et la ré-atténue quand les liens s'effacent
+        for w in draws:
+            e = w["e"]
+            css.append("@keyframes e%d{0%%{stroke-dashoffset:%spx;opacity:%s}%s%%{"
+                       "stroke-dashoffset:%spx}%s%%{opacity:%s}%s%%,%s%%{stroke-dashoffset:0;"
+                       "opacity:1}%s%%,100%%{opacity:%s}}.e%d{animation:e%d %s}"
+                       % (w["i"], f1(DASH_HIDDEN), dim, pct(w["s"], T), f1(DASH_HIDDEN),
+                          pct(e - min(LIT_EDGE, 0.5 * (e - w["s"])), T), dim, pct(e, T),
+                          pct(tl["fade0"], T), pct(tl["fade1"], T), dim, w["i"], w["i"], lin))
+        # éclair : part de 0 à la fin du trait complet (retard propre à chaque étoile)
         css.append("@keyframes fl{0%%{opacity:0}%s%%,%s%%{opacity:1}%s%%,100%%{opacity:0}}"
-                   % (pct(0.7 * tl["draw"], T), pct(tl["draw"] + FLASH_HOLD, T),
-                      pct(tl["draw"] + FLASH_DECAY, T)))
-        css.append(".F g{opacity:0}")
-        for i, s in enumerate(tl["starts"]):
-            css.append(".f%d{animation:fl %ss ease-in-out -%ss infinite}"
-                       % (i, f2(T), f2((ph - s) % T)))
-        # allumage : atténuée jusqu'au 1er trait, pleine pendant la pose, atténuée à l'effacement
-        for i, s in enumerate(tl["starts"]):
-            css.append("@keyframes b%d{0%%,%s%%{opacity:%s}%s%%,%s%%{opacity:1}%s%%,100%%{"
-                       "opacity:%s}}.b%d{animation:b%d %s}"
-                       % (i, pct(s, T), f2(UNLINKED), pct(s + 0.7 * tl["draw"], T),
-                          pct(tl["fade0"], T), pct(tl["fade1"], T), f2(UNLINKED), i, i, anim))
+                   % (pct(FLASH_RISE, T), pct(FLASH_RISE + FLASH_HOLD, T), pct(FLASH_DECAY, T)))
+        css.append(".F circle{opacity:0;animation:fl %ss ease-out infinite}" % f2(T))
     css.append("text{font:600 %dpx ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',"
                "monospace}" % MONTH_FS)
     # écran étroit (image < 560 px) : un mois sur trois, lisible ; les autres s'effacent
@@ -1093,15 +1133,13 @@ def render(scene, theme, login):
 
     # --- liens : au-dessus des halos et des nébuleuses (lisibles), sous aigrettes et cœurs ;
     # un groupe par étape, tracés de l'ancien jour vers le récent
-    if steps:
+    if draws:
         o('<g class="L" stroke="%s" stroke-opacity="%s" stroke-width="%s" stroke-linecap="round" '
           'stroke-dasharray="1 2">' % (th["line"], f2(th["line_op"]), f2(LINE_W)))
-        for i, step in enumerate(steps):
-            o('<g class="k%d">' % i)
-            for a, b in step:
-                o('<path d="M%s %s %s %s" pathLength="1"/>'
-                  % (f1(pos[a][0]), f1(pos[a][1]), f1(pos[b][0]), f1(pos[b][1])))
-            o("</g>")
+        for w in draws:                      # de l'étoile allumée vers celle qu'il va allumer
+            a, b = w["a"], w["b"]
+            o('<path class="e%d" d="M%s %s %s %s" pathLength="1"/>'
+              % (w["i"], f1(pos[a][0]), f1(pos[a][1]), f1(pos[b][0]), f1(pos[b][1])))
         o("</g>")
 
     if by_n:
@@ -1129,17 +1167,15 @@ def render(scene, theme, login):
               % (lit(s["date"]), f1(s["x"]), f1(s["y"]), f3(st["cr"]), st["color"]))
         o("</g>")
 
-    # --- éclats : les deux étoiles de chaque trait s'illuminent pendant qu'il se trace -----
-    if steps:
+    # --- éclairs : une étoile s'illumine à l'instant où un trait complet l'atteint ---------
+    if draws:
         o('<g class="F" fill="url(#f)">')
-        for i, step in enumerate(steps):
-            o('<g class="f%d">' % i)
-            for date in sorted({d for e in step for d in e}):
-                x, y = pos[date]
-                st = styles[date]
-                o('<circle cx="%s" cy="%s" r="%s"/>'
-                  % (f1(x), f1(y), f1(min(st["fr"], edge_room(x, y)))))
-            o("</g>")
+        for date in sorted(lights, key=lambda d: (draws[lights[d]]["e"], d)):
+            x, y = pos[date]
+            st = styles[date]
+            o('<circle cx="%s" cy="%s" r="%s" style="animation-delay:-%ss"/>'
+              % (f1(x), f1(y), f1(min(st["fr"], edge_room(x, y))),
+                 f3((tl["phase"] - draws[lights[date]]["e"]) % tl["T"])))
         o("</g>")
 
     # --- repères de mois : discrets, en bas, comme l'axe du graphe GitHub ------------------
@@ -1156,7 +1192,7 @@ def render(scene, theme, login):
 def budget(svg):
     """(octets, éléments, nœuds animés : éléments dont la classe porte une animation CSS)."""
     elems = svg.count("<") - svg.count("</")
-    anim = len(re.findall(r'class="(?:w\d|u[12]|L|k\d+|f\d+|b\d+)"', svg))
+    anim = len(re.findall(r'class="(?:w\d|u[12]|L|e\d+)"', svg)) + svg.count('style="animation')
     return len(svg.encode("utf-8")), elems, anim
 
 
@@ -1349,7 +1385,8 @@ def parse_svg_links(svg, scene):
     """Paires de jours reliées par un trait dans le SVG (extrémités -> dates)."""
     at = {(f1(x), f1(y)): date for date, (x, y) in scene["pos"].items()}
     pairs = []
-    for m in re.finditer(r'<path d="M([\d.]+) ([\d.]+) ([\d.]+) ([\d.]+)" pathLength="1"/>', svg):
+    for m in re.finditer(r'<path(?: class="e\d+")? d="M([\d.]+) ([\d.]+) ([\d.]+) ([\d.]+)" '
+                         r'pathLength="1"/>', svg):
         a, b = at.get((m.group(1), m.group(2))), at.get((m.group(3), m.group(4)))
         if a is None or b is None:
             raise CheckError("trait qui ne part pas d'un jour de la grille")
@@ -1411,7 +1448,7 @@ def check_jitter(scenes):
                 raise CheckError("le décalage du %s change d'une année à l'autre" % d["date"])
 
 
-LIT = r'(?: class="(?:b\d+|d)")?'     # classe d'allumage optionnelle (étoile liée ou non)
+LIT = r'(?: class="(?:e\d+|d)")?'     # classe d'allumage optionnelle (étoile liée ou non)
 STAR_RES = {
     "halo": re.compile(r'<circle' + LIT + r' cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" '
                        r'fill-opacity="([\d.]+)"/>'),
@@ -1498,7 +1535,7 @@ def check_marks_share(svg, scene):
             raise CheckError("trop d'aigrettes (%d pour %d jours actifs)" % (sparks, n))
         if flares > min(FLARE_MAX, max(1, round(FLARE_SHARE * n))):
             raise CheckError("trop de reflets (%d pour %d jours actifs)" % (flares, n))
-    if scene["steps"]:
+    if scene["draws"]:
         core = STAR_RES["core"].search(svg)
         at = {"halos": svg.find('fill="url(#h)"'), "liens": svg.find('class="L"'),
               "cœurs": core.start() if core else len(svg)}
@@ -1510,33 +1547,94 @@ def check_marks_share(svg, scene):
 
 
 def check_animation(svg, scene):
-    """Étapes chronologiques, une keyframe par étape, cycle borné, éclats = extrémités des
-    traits de l'étape ; année sans lien : aucune animation de lien."""
-    steps, tl = scene["steps"], scene["tl"]
-    if not steps:
-        if 'class="L"' in svg or "@keyframes k" in svg or 'class="F"' in svg:
+    """Relu dans le SVG : un trait par lien ; tous à la même vitesse ; un trait part de
+    l'étoile déjà allumée (ou de la racine, jour le plus ancien de sa constellation) ; chaque
+    étoile liée prend pleine opacité et son éclair à la fin du trait complet qui l'atteint
+    (la racine : de son premier trait), jamais avant ; une étoile jamais liée reste atténuée ;
+    cycle borné ; année sans lien : aucune animation de lien."""
+    tl = scene["tl"]
+    if not scene["draws"]:
+        if 'class="L"' in svg or "@keyframes e" in svg or 'class="F"' in svg:
             raise CheckError("animation de liens dans une année sans lien")
         return
-    if not T_MIN - 1e-9 <= tl["T"] <= T_MAX + 1e-9:
-        raise CheckError("cycle de %.1f s hors de [%g, %g]" % (tl["T"], T_MIN, T_MAX))
-    if len(steps) > MAX_STEPS:
-        raise CheckError("trop d'étapes (%d)" % len(steps))
-    flat = [e for st in steps for e in st]
-    if flat != sorted(flat, key=lambda e: (e[1], e[0])) or sorted(flat) != sorted(scene["links"]):
-        raise CheckError("liens pas tracés dans l'ordre chronologique")
-    if len(re.findall(r"@keyframes k\d+\{", svg)) != len(steps):
-        raise CheckError("une keyframe de tracé par étape attendue")
-    starts = tl["starts"]
-    if any(b <= a for a, b in zip(starts, starts[1:])) or \
-            starts[-1] + tl["draw"] + FLASH_DECAY > tl["fade0"]:
-        raise CheckError("étapes mal ordonnées dans le temps")
+    T = tl["T"]
+    if not T_MIN - 1e-9 <= T <= T_MAX + 1e-9:
+        raise CheckError("cycle de %.1f s hors de [%g, %g]" % (T, T_MIN, T_MAX))
+    tol = 0.0002 * T + 0.002                 # arrondi des pourcentages écrits
     at = {(f1(x), f1(y)): date for date, (x, y) in scene["pos"].items()}
-    for i, step in enumerate(steps):
-        m = re.search(r'<g class="f%d">\n(.*?)\n</g>' % i, svg, re.S)
-        got = {at.get(c) for c in re.findall(r'<circle cx="([\d.]+)" cy="([\d.]+)" r="[\d.]+"/>',
-                                             m.group(1))} if m else set()
-        if got != {d for e in step for d in e}:
-            raise CheckError("éclats de l'étape %d : pas les étoiles de ses traits" % i)
+    kf = {}
+    for m in re.finditer(r"@keyframes e(\d+)\{0%\{[^}]*\}([\d.]+)%\{stroke-dashoffset:[^}]*\}"
+                         r"([\d.]+)%\{opacity:([\d.]+)\}([\d.]+)%,", svg):
+        if float(m.group(4)) >= 1:
+            raise CheckError("étoile pleine avant la fin de son trait")
+        kf[int(m.group(1))] = (float(m.group(2)) * T / 100, float(m.group(5)) * T / 100)
+    paths = {}
+    for m in re.finditer(r'<path class="e(\d+)" d="M([\d.]+) ([\d.]+) ([\d.]+) ([\d.]+)" '
+                         r'pathLength="1"/>', svg):
+        a, b = at.get((m.group(2), m.group(3))), at.get((m.group(4), m.group(5)))
+        ln = math.hypot(float(m.group(2)) - float(m.group(4)), float(m.group(3)) - float(m.group(5)))
+        paths[int(m.group(1))] = (a, b, ln)
+    if set(paths) != set(kf) or len(paths) != len(scene["links"]):
+        raise CheckError("un tracé (keyframe) par lien attendu")
+    for i, (a, b, ln) in paths.items():
+        if abs((kf[i][1] - kf[i][0]) - ln / tl["speed"]) > 2 * tol:
+            raise CheckError("traits à des vitesses différentes")
+    incoming = {}
+    for i, (a, b, _) in paths.items():
+        if b in incoming:
+            raise CheckError("étoile atteinte par deux traits")
+        incoming[b] = i
+    lit_at = {b: kf[i][1] for b, i in incoming.items()}
+    roots = {a for a, b, _ in paths.values() if a not in incoming}
+    for r in roots:
+        lit_at[r] = min(kf[i][1] for i, (a, b, _) in paths.items() if a == r)
+    for i, (a, b, _) in paths.items():
+        if a in incoming and abs(kf[i][0] - kf[incoming[a]][1]) > tol:
+            raise CheckError("trait parti d'une étoile pas encore allumée")
+    forest = Forest()
+    for a, b, _ in paths.values():
+        forest.union(a, b)
+    for r in roots:
+        if r != min(d for d in lit_at if forest.find(d) == forest.find(r)):
+            raise CheckError("propagation qui ne part pas du jour le plus ancien")
+    # une constellation après l'autre, de la plus ancienne à la plus récente
+    span = {}
+    for i, (a, b, _) in paths.items():
+        lo, hi = span.get(forest.find(a), (math.inf, -math.inf))
+        span[forest.find(a)] = (min(lo, kf[i][0]), max(hi, kf[i][1]))
+    seq = sorted((min(d for d in lit_at if forest.find(d) == k), v) for k, v in span.items())
+    for (_, (s0, e0)), (_, (s1, e1)) in zip(seq, seq[1:]):
+        if s1 < e0 + tl["between"] - tol:
+            raise CheckError("constellations pas tracées à la suite (de la plus ancienne)")
+    seen = 0
+    for m in re.finditer(r'<(?:circle|use|path) class="(e\d+|d)"[^>]*?(?:cx="([\d.]+)" '
+                         r'cy="([\d.]+)"|translate\(([\d.]+) ([\d.]+)\)|d="M([\d.]+) ([\d.]+)m)',
+                         svg):
+        xy = next((m.group(k), m.group(k + 1)) for k in (2, 4, 6) if m.group(k))
+        date, cls = at.get(xy), m.group(1)
+        if date not in lit_at:
+            if cls != "d":
+                raise CheckError("étoile jamais liée qui s'allume (%s)" % date)
+        elif cls == "d" or abs(kf[int(cls[1:])][1] - lit_at[date]) > tol:
+            raise CheckError("étoile du %s : classe %s, pas allumée à la fin de son trait"
+                             % (date, cls))
+        seen += 1
+    if seen < 2 * len(scene["stars"]):
+        raise CheckError("allumage : classes manquantes sur des étoiles")
+    if 'class="d"' in svg and ".d{opacity:%s}" % f2(UNLINKED) not in svg:
+        raise CheckError("étoiles non liées pas atténuées")
+    flashes = {}
+    for x, y, dl in re.findall(r'<circle cx="([\d.]+)" cy="([\d.]+)" r="[\d.]+" '
+                               r'style="animation-delay:-([\d.]+)s"/>', svg):
+        flashes[at.get((x, y))] = (tl["phase"] - float(dl)) % T
+    if set(flashes) != set(lit_at):
+        raise CheckError("un éclair par étoile allumée attendu")
+    for d, t in flashes.items():
+        gap = abs(t - lit_at[d])
+        if min(gap, T - gap) > tol:
+            raise CheckError("éclair du %s pas à la fin de son trait" % d)
+    if not re.search(r"@keyframes fl\{0%\{opacity:0\}", svg):
+        raise CheckError("éclair qui ne part pas de zéro")
 
 
 def check_leaks(text, names, ids=()):
@@ -1551,30 +1649,6 @@ def check_leaks(text, names, ids=()):
     for rid in ids:
         if rid in text:
             raise CheckError("fuite d'un identifiant de dépôt dans la sortie")
-
-
-def check_unlinked(svg, scene):
-    """Étoile jamais liée : classe d (atténuée en permanence) ; étoile liée : classe b<i> de
-    l'étape de son premier trait, sur chacun de ses éléments, avec sa keyframe d'allumage."""
-    first = first_steps(scene["steps"])
-    at = {(f1(x), f1(y)): date for date, (x, y) in scene["pos"].items()}
-    pat = re.compile(r'<(?:circle|use|path) class="(b\d+|d)"[^>]*?(?:cx="([\d.]+)" cy="([\d.]+)"'
-                     r'|translate\(([\d.]+) ([\d.]+)\)|d="M([\d.]+) ([\d.]+)m)')
-    seen = 0
-    for m in pat.finditer(svg):
-        xy = next((m.group(k), m.group(k + 1)) for k in (2, 4, 6) if m.group(k))
-        date = at.get(xy)
-        want = "b%d" % first[date] if date in first else "d"
-        if m.group(1) != want:
-            raise CheckError("étoile du %s : classe %s, attendu %s" % (date, m.group(1), want))
-        seen += 1
-    if seen < 2 * len(scene["stars"]):
-        raise CheckError("allumage : classes manquantes sur des étoiles")
-    for i in sorted(set(first.values())):
-        if not re.search(r"@keyframes b%d\{" % i, svg):
-            raise CheckError("keyframe d'allumage b%d manquante" % i)
-    if 'class="d"' in svg and ".d{opacity:%s}" % f2(UNLINKED) not in svg:
-        raise CheckError("étoiles non liées pas atténuées")
 
 
 def check_dimmed(svg):
@@ -1758,7 +1832,6 @@ def self_test():
                 check_links(parse_svg_links(svg, scene), days)
                 check_stars(svg, scene, theme)
                 check_animation(svg, scene)
-                check_unlinked(svg, scene)
                 check_marks_share(svg, scene)
                 check_leaks(svg, FIXTURE_NAMES, ids)
                 if theme == "dark":
@@ -1772,9 +1845,10 @@ def self_test():
         except CheckError as exc:
             fail(str(exc))
         tl = scene["tl"]
-        print("ok  %-10s %3d jours, %3d étoiles, %3d liens, %2d étapes%s | %s"
-              % (name, len(days), len(scene["stars"]), len(scene["links"]), len(scene["steps"]),
-                 ", cycle %.1f s" % tl["T"] if tl else "", ", ".join(sizes)))
+        print("ok  %-10s %3d jours, %3d étoiles, %3d liens%s | %s"
+              % (name, len(days), len(scene["stars"]), len(scene["links"]),
+                 ", vitesse %.0f u/s, cycle %.1f s" % (tl["speed"], tl["T"]) if tl else "",
+                 ", ".join(sizes)))
         if name == "réel épars":
             got = set(scene["links"])
             nov = {e for e in got if e[0].startswith("2025-11")}
@@ -1819,8 +1893,7 @@ def self_test():
     def with_links(scene, extra):
         s = dict(scene)
         s["links"] = list(scene["links"]) + extra
-        s["steps"] = list(scene["steps"]) + [[e] for e in extra]
-        s["tl"] = timeline(len(s["steps"]))
+        s["draws"], s["lights"], s["tl"] = propagate(s["stars"], s["links"], s["pos"])
         return s
 
     def links_of(scene):
@@ -1876,10 +1949,26 @@ def self_test():
     crowded["stars"] = [dict(st, spark=True, flare=True) for st in dense["stars"]]
     expect_failure("aigrettes partout", lambda: check_marks_share(
         render(crowded, "dark", LOGIN), crowded), "trop d'aigrettes")
-    expect_failure("éclats décalés", lambda: check_animation(
-        svg.replace('<g class="f1">', '<g class="f9999">'), dense), "éclats")
-    expect_failure("étoile liée laissée atténuée", lambda: check_unlinked(
-        svg.replace(' class="b0"', ' class="d"', 1), dense), "classe")
+    last = len(dense["draws"]) - 1
+    overlap = dict(dense)                    # 2e constellation avancée sur la 1re
+    overlap["draws"] = [dict(w) for w in dense["draws"]]
+    roots = sorted({w["a"] for w in overlap["draws"]} - {w["b"] for w in overlap["draws"]})
+    if len(roots) < 2:
+        raise SystemExit("self-test : il faut au moins deux constellations dans « dense »")
+    fo = Forest()
+    for w in overlap["draws"]:
+        fo.union(w["a"], w["b"])
+    second = [w for w in overlap["draws"] if fo.find(w["a"]) == fo.find(roots[1])]
+    shift = min(w["s"] for w in second) - LEAD
+    for w in second:
+        w["s"], w["e"] = w["s"] - shift, w["e"] - shift
+    expect_failure("constellations superposées", lambda: check_animation(
+        render(overlap, "dark", LOGIN), overlap), "à la suite")
+    expect_failure("étoile allumée par un autre trait", lambda: check_animation(
+        svg.replace(' class="e0"', ' class="e%d"' % last, 1), dense), "fin de son trait")
+    expect_failure("éclair avant la fin du trait", lambda: check_animation(re.sub(
+        r'animation-delay:-([\d.]+)s', lambda m: "animation-delay:-%ss" % f2(
+            (float(m.group(1)) + 0.5) % dense["tl"]["T"]), svg, count=1), dense), "éclair")
     print("ok  témoins : chaque règle détecte son défaut, pour la bonne raison")
 
     # données malformées : sortie en erreur, message générique (sans nom de dépôt)
@@ -2073,7 +2162,8 @@ def main(argv=None):
     print("jours : %d, jours actifs : %d, dépôts distincts : %d, liens tracés : %d"
           % (len(days), len(scene["stars"]), len(data["repos"]), len(scene["links"])))
     if scene["tl"]:
-        print("animation : %d étapes, cycle de %.1f s" % (len(scene["steps"]), scene["tl"]["T"]))
+        print("animation : propagation, %d traits, vitesse %.0f u/s, cycle de %.1f s"
+              % (len(scene["draws"]), scene["tl"]["speed"], scene["tl"]["T"]))
     if args.save_json:
         tmp = args.save_json + ".tmp"
         with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
