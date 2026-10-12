@@ -163,6 +163,8 @@ MONTH_NAMES = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
 # Éclat
+STAR_SCALE = 0.5             # taille des étoiles (cœur, halo, aigrette, reflet, éclair) : 1 = d'origine
+UNLINKED = 0.8               # opacité d'une étoile tant qu'elle n'est pas liée (1 dès son 1er trait)
 FLOOR = 0.2                  # t d'un jour à 1 contribution (0 = poussière, 1 = record)
 LADDER = 0.004               # écart minimal de t entre deux nombres distincts (stricte croissance)
 SPARK_T = 0.3                # année éparse : aigrette à 4 branches à partir de ce t
@@ -178,7 +180,7 @@ SOFT_HALO_OP = (0.22, 0.38)  #   et opacité halo_op * (0,22 + 0,38 t) (le reste
 DENSE_NEB = 0.75             # année dense : nébuleuses des seules constellations, plus discrètes
 # aigrettes : rapport épaisseur / longueur (0,3 r / L) arrondi au plus proche de ces variantes
 SPARK_K = (0.17, 0.14, 0.115, 0.095, 0.08, 0.067, 0.055)
-DUST_R = (0.4, 0.45)         # rayon des grains : 0,4 + 0,45 * hachage (< plus petit cœur)
+DUST_R = (0.25, 0.2)         # rayon des grains : 0,25 + 0,2 * hachage (< plus petit cœur, 0,48)
 DUST_O = (0.22, 0.38)        # opacité des grains
 
 # Animation (secondes)
@@ -720,14 +722,15 @@ def star_style(t, th, spark=None, flare=None, soft=False):
     Par défaut (année éparse) : aigrette dès t >= 0,3, reflet au-delà de 0,75."""
     spark = t >= SPARK_T if spark is None else spark
     flare = t > FLARE_T if flare is None else flare
-    r = 1.0 + 1.9 * t
+    r = STAR_SCALE * (1.0 + 1.9 * t)
     if soft and not spark:
         hr, ho = r * (SOFT_HALO[0] + SOFT_HALO[1] * t), th["halo_op"] * (
             SOFT_HALO_OP[0] + SOFT_HALO_OP[1] * t)
     else:
         hr, ho = r * (2.6 + 2.6 * t), th["halo_op"] * (0.4 + 0.6 * t)
     st = {"cr": 0.7 * r, "hr": hr, "ho": ho,
-          "color": mix(th["core"][0], th["core"][1], t), "fr": 6.0 + 2.6 * r * (1.0 + t)}
+          "color": mix(th["core"][0], th["core"][1], t),
+          "fr": STAR_SCALE * 6.0 + 2.6 * r * (1.0 + t)}
     if spark:
         st["L"] = r * (1.4 + 4.2 * t * t)
         st["so"] = 0.45 + 0.5 * t
@@ -958,11 +961,27 @@ def spark_path(k):
     return "M-1 0q%s -%s 1 -1q%s %s 1 1q-%s %s -1 1q-%s -%s -1 -1z" % (a, b, b, a, a, b, b, a)
 
 
+def first_steps(steps):
+    """{date: indice de l'étape où l'étoile reçoit son premier trait}."""
+    first = {}
+    for i, step in enumerate(steps or ()):
+        for e in step:
+            for d in e:
+                first.setdefault(d, i)
+    return first
+
+
 def render(scene, theme, login):
     th = THEMES[theme]
     tl, steps = scene["tl"], scene["steps"]
     out = []
     o = out.append
+    # étoile pas (encore) liée : atténuée (UNLINKED) ; elle s'allume avec son premier trait
+    # (classe b<étape>) et s'atténue de nouveau quand les liens s'effacent ; jamais liée : d
+    first = first_steps(steps)
+
+    def lit(date):
+        return ' class="b%d"' % first[date] if date in first else ' class="d"'
     o('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d" '
       'fill="none" role="img" aria-labelledby="t d">' % (W, H, W, H))
     o('<title id="t">%s</title>' % escape(
@@ -981,6 +1000,7 @@ def render(scene, theme, login):
         css.append(".w%d{animation:tw %ss ease-in-out %ss infinite}" % (k, f1(dur), f1(delay)))
     css.append(".u1{animation:td 6.5s ease-in-out -1s infinite}")
     css.append(".u2{animation:td 8.3s ease-in-out -4.6s infinite}")
+    css.append(".d{opacity:%s}" % f2(UNLINKED))
     if tl:
         T, ph = tl["T"], tl["phase"]
         anim = "%ss ease-in-out -%ss infinite" % (f2(T), f2(ph))
@@ -998,6 +1018,12 @@ def render(scene, theme, login):
         for i, s in enumerate(tl["starts"]):
             css.append(".f%d{animation:fl %ss ease-in-out -%ss infinite}"
                        % (i, f2(T), f2((ph - s) % T)))
+        # allumage : atténuée jusqu'au 1er trait, pleine pendant la pose, atténuée à l'effacement
+        for i, s in enumerate(tl["starts"]):
+            css.append("@keyframes b%d{0%%,%s%%{opacity:%s}%s%%,%s%%{opacity:1}%s%%,100%%{"
+                       "opacity:%s}}.b%d{animation:b%d %s}"
+                       % (i, pct(s, T), f2(UNLINKED), pct(s + 0.7 * tl["draw"], T),
+                          pct(tl["fade0"], T), pct(tl["fade1"], T), f2(UNLINKED), i, i, anim))
     css.append("text{font:600 %dpx ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',"
                "monospace}" % MONTH_FS)
     # écran étroit (image < 560 px) : un mois sur trois, lisible ; les autres s'effacent
@@ -1060,8 +1086,8 @@ def render(scene, theme, login):
                 o('<g class="w%d">' % k)
                 for s in group:
                     st = styles[s["date"]]
-                    o('<circle cx="%s" cy="%s" r="%s" fill-opacity="%s"/>'
-                      % (f1(s["x"]), f1(s["y"]), f3(st["hr"]), f4(st["ho"])))
+                    o('<circle%s cx="%s" cy="%s" r="%s" fill-opacity="%s"/>'
+                      % (lit(s["date"]), f1(s["x"]), f1(s["y"]), f3(st["hr"]), f4(st["ho"])))
                 o("</g>")
         o("</g>")
 
@@ -1084,8 +1110,8 @@ def render(scene, theme, login):
             o('<g fill="%s">' % th["spark"])
             for s in sparks:
                 st = styles[s["date"]]
-                o('<use href="#s%d" transform="translate(%s %s)scale(%s)" fill-opacity="%s"/>'
-                  % (st["sk"], f1(s["x"]), f1(s["y"]), f2(st["L"]), f3(st["so"])))
+                o('<use%s href="#s%d" transform="translate(%s %s)scale(%s)" fill-opacity="%s"/>'
+                  % (lit(s["date"]), st["sk"], f1(s["x"]), f1(s["y"]), f2(st["L"]), f3(st["so"])))
             o("</g>")
         flares = [s for s in by_n if "flare" in styles[s["date"]]]
         if flares:
@@ -1093,13 +1119,14 @@ def render(scene, theme, login):
             for s in flares:
                 ln = styles[s["date"]]["flare"]
                 a, b = min(ln, s["x"] - EDGE), min(ln, W - EDGE - s["x"])
-                o('<path d="M%s %sm-%s 0h%s"/>' % (f1(s["x"]), f1(s["y"]), f1(a), f1(a + b)))
+                o('<path%s d="M%s %sm-%s 0h%s"/>'
+                  % (lit(s["date"]), f1(s["x"]), f1(s["y"]), f1(a), f1(a + b)))
             o("</g>")
         o("<g>")
         for s in by_n:
             st = styles[s["date"]]
-            o('<circle cx="%s" cy="%s" r="%s" fill="%s"/>'
-              % (f1(s["x"]), f1(s["y"]), f3(st["cr"]), st["color"]))
+            o('<circle%s cx="%s" cy="%s" r="%s" fill="%s"/>'
+              % (lit(s["date"]), f1(s["x"]), f1(s["y"]), f3(st["cr"]), st["color"]))
         o("</g>")
 
     # --- éclats : les deux étoiles de chaque trait s'illuminent pendant qu'il se trace -----
@@ -1129,7 +1156,7 @@ def render(scene, theme, login):
 def budget(svg):
     """(octets, éléments, nœuds animés : éléments dont la classe porte une animation CSS)."""
     elems = svg.count("<") - svg.count("</")
-    anim = len(re.findall(r'class="(?:w\d|u[12]|L|k\d+|f\d+)"', svg))
+    anim = len(re.findall(r'class="(?:w\d|u[12]|L|k\d+|f\d+|b\d+)"', svg))
     return len(svg.encode("utf-8")), elems, anim
 
 
@@ -1384,13 +1411,15 @@ def check_jitter(scenes):
                 raise CheckError("le décalage du %s change d'une année à l'autre" % d["date"])
 
 
+LIT = r'(?: class="(?:b\d+|d)")?'     # classe d'allumage optionnelle (étoile liée ou non)
 STAR_RES = {
-    "halo": re.compile(r'<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" '
+    "halo": re.compile(r'<circle' + LIT + r' cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" '
                        r'fill-opacity="([\d.]+)"/>'),
-    "core": re.compile(r'<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" fill="(#[0-9a-f]{6})"/>'),
-    "spark": re.compile(r'<use href="#s(\d)" transform="translate\(([\d.]+) ([\d.]+)\)scale\('
-                        r'([\d.]+)\)" fill-opacity="([\d.]+)"/>'),
-    "flare": re.compile(r'<path d="M([\d.]+) ([\d.]+)m-([\d.]+) 0h([\d.]+)"/>'),
+    "core": re.compile(r'<circle' + LIT + r' cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" '
+                       r'fill="(#[0-9a-f]{6})"/>'),
+    "spark": re.compile(r'<use' + LIT + r' href="#s(\d)" transform="translate\(([\d.]+) ([\d.]+)\)'
+                        r'scale\(([\d.]+)\)" fill-opacity="([\d.]+)"/>'),
+    "flare": re.compile(r'<path' + LIT + r' d="M([\d.]+) ([\d.]+)m-([\d.]+) 0h([\d.]+)"/>'),
     "dust": re.compile(r'<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)" opacity="([\d.]+)"/>'),
 }
 
@@ -1522,6 +1551,30 @@ def check_leaks(text, names, ids=()):
     for rid in ids:
         if rid in text:
             raise CheckError("fuite d'un identifiant de dépôt dans la sortie")
+
+
+def check_unlinked(svg, scene):
+    """Étoile jamais liée : classe d (atténuée en permanence) ; étoile liée : classe b<i> de
+    l'étape de son premier trait, sur chacun de ses éléments, avec sa keyframe d'allumage."""
+    first = first_steps(scene["steps"])
+    at = {(f1(x), f1(y)): date for date, (x, y) in scene["pos"].items()}
+    pat = re.compile(r'<(?:circle|use|path) class="(b\d+|d)"[^>]*?(?:cx="([\d.]+)" cy="([\d.]+)"'
+                     r'|translate\(([\d.]+) ([\d.]+)\)|d="M([\d.]+) ([\d.]+)m)')
+    seen = 0
+    for m in pat.finditer(svg):
+        xy = next((m.group(k), m.group(k + 1)) for k in (2, 4, 6) if m.group(k))
+        date = at.get(xy)
+        want = "b%d" % first[date] if date in first else "d"
+        if m.group(1) != want:
+            raise CheckError("étoile du %s : classe %s, attendu %s" % (date, m.group(1), want))
+        seen += 1
+    if seen < 2 * len(scene["stars"]):
+        raise CheckError("allumage : classes manquantes sur des étoiles")
+    for i in sorted(set(first.values())):
+        if not re.search(r"@keyframes b%d\{" % i, svg):
+            raise CheckError("keyframe d'allumage b%d manquante" % i)
+    if 'class="d"' in svg and ".d{opacity:%s}" % f2(UNLINKED) not in svg:
+        raise CheckError("étoiles non liées pas atténuées")
 
 
 def check_dimmed(svg):
@@ -1705,6 +1758,7 @@ def self_test():
                 check_links(parse_svg_links(svg, scene), days)
                 check_stars(svg, scene, theme)
                 check_animation(svg, scene)
+                check_unlinked(svg, scene)
                 check_marks_share(svg, scene)
                 check_leaks(svg, FIXTURE_NAMES, ids)
                 if theme == "dark":
@@ -1824,6 +1878,8 @@ def self_test():
         render(crowded, "dark", LOGIN), crowded), "trop d'aigrettes")
     expect_failure("éclats décalés", lambda: check_animation(
         svg.replace('<g class="f1">', '<g class="f9999">'), dense), "éclats")
+    expect_failure("étoile liée laissée atténuée", lambda: check_unlinked(
+        svg.replace(' class="b0"', ' class="d"', 1), dense), "classe")
     print("ok  témoins : chaque règle détecte son défaut, pour la bonne raison")
 
     # données malformées : sortie en erreur, message générique (sans nom de dépôt)
