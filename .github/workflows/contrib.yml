@@ -1,5 +1,5 @@
-# Dessine le graphe de contributions en ciel de nuit (variantes sombre + clair) avec
-# scripts/gen_contrib.py et le publie sur la branche "output", lue par le README :
+# Dessine l'année de contributions en constellations (variantes sombre + clair) avec
+# scripts/gen_contrib.py et la publie sur la branche "output", lue par le README :
 #   https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-dark.svg
 #   https://raw.githubusercontent.com/Bisiaux-dev/Bisiaux-dev/output/contrib-light.svg
 
@@ -27,27 +27,38 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v7
+      # Actions épinglées sur un commit (une étiquette peut être déplacée). Pas d'identifiants
+      # laissés dans .git : la publication utilise son propre GITHUB_TOKEN.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       # Pas de setup-python : le script n'utilise que la bibliothèque standard (Python 3.8+),
       # et le python3 préinstallé sur ubuntu-latest suffit. Une étape de moins, rien à télécharger.
       # Si une étape échoue (auto-test, API, calendrier vide...), rien n'est écrit et le job
       # s'arrête : la branche output garde les images de la veille.
-      # Auto-test : calendriers synthétiques (vide, épars, dense, complet...). Vérifie une étoile
-      # par jour, plus brillante quand le jour compte plus de contributions, et les budgets
-      # de taille. Sans réseau, quelques secondes.
+      # Auto-test (sans réseau ni jeton, quelques secondes) : années synthétiques (vide, éparse,
+      # dense, pleine...) ; éclat strictement croissant, liens seulement entre voisins de la
+      # grille partageant un dépôt (jamais samedi -> dimanche), sans cycle ni doublon ;
+      # décalages fixes par date ; budgets ; aucun nom de dépôt dans les SVG, la sortie ni les
+      # erreurs ; données malformées refusées.
       - name: Auto-test du dessin
         run: python3 scripts/gen_contrib.py --self-test
 
+      # CONTRIB_TOKEN (secret du dépôt, jeton personnel du propriétaire) : n'est exposé qu'à
+      # cette étape. Il ne sert qu'à lire les jours de contribution des dépôts privés pour
+      # tracer leurs liens ; les noms de dépôts sont hachés dès la lecture et n'apparaissent
+      # nulle part (journal, images, branche output). Absent ou refusé : repli sur GITHUB_TOKEN,
+      # sans liens pour les dépôts privés (leurs jours restent des étoiles).
       - name: Générer le ciel (sombre + clair)
         run: python3 scripts/gen_contrib.py --user ${{ github.repository_owner }} --out dist
         env:
+          CONTRIB_TOKEN: ${{ secrets.CONTRIB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # keep_history false : la branche output ne contient que dist/ (les anciens
-      # snake-*.svg disparaissent au premier passage).
+      # keep_history false : la branche output ne contient que dist/ (les deux SVG).
       - name: Publier sur la branche output
-        uses: crazy-max/ghaction-github-pages@v5
+        uses: crazy-max/ghaction-github-pages@1d6ee9b181a81033a16bd707a1401afa978daab4 # v5
         with:
           target_branch: output
           build_dir: dist
